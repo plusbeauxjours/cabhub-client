@@ -1,7 +1,10 @@
 import React from "react";
 import { IS_LOGGED_IN } from "./AppQueries";
 import { graphql } from "react-apollo";
+import AppPresenter from "./AppPresenter";
 
-const AppContainer = ({ data }) => <div>{JSON.stringify(data)}</div>;
+const AppContainer = ({ data }) => (
+  <AppPresenter isLoggedIn={data.isLoggedIn} />
+);
 
 export default graphql(IS_LOGGED_IN)(AppContainer);
