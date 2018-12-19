@@ -4,7 +4,7 @@ import { graphql } from "react-apollo";
 import AppPresenter from "./AppPresenter";
 
 const AppContainer = ({ data }) => (
-  <AppPresenter isLoggedIn={data.isLoggedIn} />
+  <AppPresenter isLoggedIn={data.auth.isLoggedIn} />
 );
 
 export default graphql(IS_LOGGED_IN)(AppContainer);
