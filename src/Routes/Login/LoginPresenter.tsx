@@ -75,13 +75,13 @@ const LoginPresenter: React.SFC<IProps> = () => (
     </Helmet>
     <Header>
       <Logo>
-        <Title>Nuber</Title>
+        <Title>Puber</Title>
       </Logo>
     </Header>
     <Footer>
       <Link to={"/phone-login"}>
         <PhoneLogin>
-          <Subtitle>Get moving with Nuber</Subtitle>
+          <Subtitle>Get moving with Puber</Subtitle>
           <FakeInput>
             🇰🇷 +82 <Grey>Enter your mobile number</Grey>
           </FakeInput>
