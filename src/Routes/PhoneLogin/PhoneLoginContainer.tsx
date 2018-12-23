@@ -14,7 +14,7 @@ interface IMutatinoInterface {
   phoneNumber: string;
 }
 
-class PHhoneSignInMutation extends Mutation<any, IMutatinoInterface> {}
+class PhoneSignInMutation extends Mutation<any, IMutatinoInterface> {}
 
 class PhoneLoginContainer extends React.Component<
   RouteComponentProps<any>,
@@ -28,11 +28,13 @@ class PhoneLoginContainer extends React.Component<
   public render() {
     const { countryCode, phoneNumber } = this.state;
     return (
-      <PHhoneSignInMutation
+      <PhoneSignInMutation
         mutation={PHONE_SIGN_IN}
-        variables={{ phoneNumber: `${countryCode}${phoneNumber}` }}
+        variables={{
+          phoneNumber: `${countryCode}${phoneNumber}`
+        }}
       >
-        {(mutation, loading) => {
+        {(mutation, { loading }) => {
           const onSubmit: React.FormEventHandler<HTMLFormElement> = event => {
             event.preventDefault();
             const isValid = /^\+[1-9]{1}[0-9]{7,11}$/.test(
@@ -54,7 +56,7 @@ class PhoneLoginContainer extends React.Component<
             />
           );
         }}
-      </PHhoneSignInMutation>
+      </PhoneSignInMutation>
     );
   }
 
