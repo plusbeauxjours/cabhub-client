@@ -3,7 +3,7 @@ import PhoneLoginPresenter from "./PhoneLoginPresenter";
 import { RouteComponentProps } from "react-router";
 import { toast } from "react-toastify";
 import { PHONE_SIGN_IN } from "./PhoneQueries";
-import { Mutation, MutationUpdaterFn } from "react-apollo";
+import { Mutation } from "react-apollo";
 import {
   startPhoneVerification,
   startPhoneVerificationVariables
@@ -36,7 +36,14 @@ class PhoneLoginContainer extends React.Component<
         variables={{
           phoneNumber: `${countryCode}${phoneNumber}`
         }}
-        update={this.afterSubmit}
+        onCompleted={data => {
+          const { StartPhoneVerification } = data;
+          if (StartPhoneVerification.ok) {
+            return;
+          } else {
+            toast.error(StartPhoneVerification.error);
+          }
+        }}
       >
         {(mutation, { loading }) => {
           const onSubmit: React.FormEventHandler<HTMLFormElement> = event => {
@@ -77,11 +84,6 @@ class PhoneLoginContainer extends React.Component<
     console.log(event.target);
     // tslint:disable-next-line
     console.log(this.state);
-  };
-
-  public afterSubmit: MutationUpdaterFn = (cache, data) => {
-    // tslint:disable-next-line
-    console.log(data);
   };
 }
 
