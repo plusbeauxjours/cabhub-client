@@ -3,18 +3,21 @@ import PhoneLoginPresenter from "./PhoneLoginPresenter";
 import { RouteComponentProps } from "react-router";
 import { toast } from "react-toastify";
 import { PHONE_SIGN_IN } from "./PhoneQueries";
-import { Mutation } from "react-apollo";
+import { Mutation, MutationUpdaterFn } from "react-apollo";
+import {
+  startPhoneVerification,
+  startPhoneVerificationVariables
+} from "../../types/api";
 
 interface IState {
   countryCode: string;
   phoneNumber: string;
 }
 
-interface IMutatinoInterface {
-  phoneNumber: string;
-}
-
-class PhoneSignInMutation extends Mutation<any, IMutatinoInterface> {}
+class PhoneSignInMutation extends Mutation<
+  startPhoneVerification,
+  startPhoneVerificationVariables
+> {}
 
 class PhoneLoginContainer extends React.Component<
   RouteComponentProps<any>,
@@ -33,6 +36,7 @@ class PhoneLoginContainer extends React.Component<
         variables={{
           phoneNumber: `${countryCode}${phoneNumber}`
         }}
+        update={this.afterSubmit}
       >
         {(mutation, { loading }) => {
           const onSubmit: React.FormEventHandler<HTMLFormElement> = event => {
@@ -73,6 +77,11 @@ class PhoneLoginContainer extends React.Component<
     console.log(event.target);
     // tslint:disable-next-line
     console.log(this.state);
+  };
+
+  public afterSubmit: MutationUpdaterFn = (cache, data) => {
+    // tslint:disable-next-line
+    console.log(data);
   };
 }
 
