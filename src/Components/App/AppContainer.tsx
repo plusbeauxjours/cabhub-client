@@ -1,5 +1,5 @@
 import React from "react";
-import { IS_LOGGED_IN } from "./AppQueries";
+import { IS_LOGGED_IN } from "./AppQueries.local";
 import { graphql } from "react-apollo";
 import AppPresenter from "./AppPresenter";
 import { ThemeProvider } from "src/typed-components";
