@@ -1,6 +1,6 @@
 import React from "react";
 import bgImage from "../../images/bg.png";
-import styled from "src/typed-components";
+import styled from "../../typed-components";
 import { RouteComponentProps } from "react-router";
 import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
