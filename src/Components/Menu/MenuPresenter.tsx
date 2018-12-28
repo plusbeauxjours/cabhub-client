@@ -18,7 +18,7 @@ const Header = styled.div`
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1ft 2fr;
+  grid-template-columns: 1fr 2fr;
   grid-gap: 10px;
   height: 100%;
   align-items: center;

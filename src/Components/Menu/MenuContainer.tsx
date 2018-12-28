@@ -6,7 +6,7 @@ import { toggleDriving, userProfile } from "../../types/api";
 import { TOGGLE_DRIVING } from "./MenuQueries";
 import { toast } from "react-toastify";
 
-class ProfilQuery extends Query<userProfile> {}
+class ProfileQuery extends Query<userProfile> {}
 class ToggleDrivingMutation extends Mutation<toggleDriving> {}
 
 class MenuContainer extends React.Component {
@@ -37,7 +37,7 @@ class MenuContainer extends React.Component {
         }}
       >
         {toggleDrivingFn => (
-          <ProfilQuery query={USER_PROFILE}>
+          <ProfileQuery query={USER_PROFILE}>
             {({ data, loading }) => (
               <MenuPresenter
                 data={data}
@@ -45,7 +45,7 @@ class MenuContainer extends React.Component {
                 toggleDrivingFn={toggleDrivingFn}
               />
             )}
-          </ProfilQuery>
+          </ProfileQuery>
         )}
       </ToggleDrivingMutation>
     );
