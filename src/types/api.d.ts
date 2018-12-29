@@ -22,20 +22,20 @@ export interface toggleDriving {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: updateMyProfile
+// GraphQL mutation operation: updateProfile
 // ====================================================
 
-export interface updateMyProfile_UpdateMyProfile {
+export interface updateProfile_UpdateMyProfile {
   __typename: "UpdateMyProfileResponse";
   ok: boolean;
   error: string | null;
 }
 
-export interface updateMyProfile {
-  UpdateMyProfile: updateMyProfile_UpdateMyProfile;
+export interface updateProfile {
+  UpdateMyProfile: updateProfile_UpdateMyProfile;
 }
 
-export interface updateMyProfileVariables {
+export interface updateProfileVariables {
   firstName: string;
   lastName: string;
   email: string;

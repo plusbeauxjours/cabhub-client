@@ -1,7 +1,7 @@
 import { gql } from "apollo-boost";
 
 export const UPDATE_PROFILE = gql`
-  mutation updateMyProfile(
+  mutation updateProfile(
     $firstName: String!
     $lastName: String!
     $email: String!

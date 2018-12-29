@@ -3,8 +3,8 @@ import React from "react";
 import EditAccountPresenter from "./EditAccountPresenter";
 import { Mutation, Query } from "react-apollo";
 import {
-  updateMyProfile,
-  updateMyProfileVariables,
+  updateProfile,
+  updateProfileVariables,
   userProfile
 } from "../../types/api";
 import { UPDATE_PROFILE } from "./EditAccountQueries";
@@ -23,8 +23,8 @@ interface IState {
 interface IProps extends RouteComponentProps<any> {}
 
 class UpdateProfileMutation extends Mutation<
-  updateMyProfile,
-  updateMyProfileVariables
+  updateProfile,
+  updateProfileVariables
 > {}
 
 class ProfileQuery extends Query<userProfile> {}

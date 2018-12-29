@@ -55,21 +55,21 @@ const EditAccountPresenter: React.SFC<IProps> = ({
         type={"text"}
         value={firstName}
         placeholder={"First name"}
-        name={firstName}
+        name={"firstName"}
       />
       <ExtendedInput
         onChange={onInputChange}
         type={"text"}
         value={lastName}
         placeholder={"Last name"}
-        name={lastName}
+        name={"lastName"}
       />
       <ExtendedInput
         onChange={onInputChange}
         type={"text"}
         value={email}
         placeholder={"Email"}
-        name={email}
+        name={"email"}
       />
       <Button onClick={null} value={loading ? "Loding" : "Update"} />
     </ExtendedForm>
