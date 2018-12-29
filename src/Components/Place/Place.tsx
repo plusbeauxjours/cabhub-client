@@ -14,7 +14,7 @@ const Place = styled.div`
   }
 `;
 
-const Icon = styled.sapn`
+const Icon = styled.span`
   cursor: pointer;
 `;
 

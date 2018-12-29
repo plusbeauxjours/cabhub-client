@@ -1,5 +1,5 @@
 import React from "react";
-import { userProfile } from "../../types/api";
+import { userProfile, getPlaces } from "../../types/api";
 import { MutationFn } from "react-apollo";
 import styled from "src/typed-components";
 import Helmet from "react-helmet";
@@ -16,6 +16,7 @@ const GridLink = styled(Link)`
   grid-template-columns: 1fr 4fr;
   grid-gap: 10px;
   margin-bottom: 10px;
+  align-items: center;
 `;
 
 const Image = styled.img`
@@ -45,12 +46,16 @@ const FakeLink = styled.span`
 interface IProps {
   userDataLoading: boolean;
   userData?: userProfile;
+  placesLoading: boolean;
+  placesData?: getPlaces;
   logUserOut?: MutationFn;
 }
 
 const SettingsPresenter: React.SFC<IProps> = ({
   userDataLoading,
   userData: { GetMyProfile: { user = null } = {} } = {},
+  placesLoading,
+  placesData: { GetMyPlaces: { places = null } = {} } = {},
   logUserOut
 }) => (
   <React.Fragment>
@@ -74,10 +79,17 @@ const SettingsPresenter: React.SFC<IProps> = ({
             </React.Fragment>
           )}
       </GridLink>
-      <Place fav={false} name={"Home"} address={"12345"} />
-      <Place fav={false} name={"Home"} address={"12345"} />
-      <Place fav={false} name={"Home"} address={"12345"} />
-      <SLink to={"places"}>Go to Places</SLink>
+      {!placesLoading &&
+        places &&
+        places.map(place => (
+          <Place
+            key={place!.id}
+            fav={place!.isFav}
+            name={place!.name}
+            address={place!.address}
+          />
+        ))}
+      <SLink to={"/places"}>Go to Places</SLink>
       <FakeLink onClick={logUserOut as any}>Log Out</FakeLink>
     </Container>
   </React.Fragment>

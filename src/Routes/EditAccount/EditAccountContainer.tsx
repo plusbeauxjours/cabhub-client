@@ -38,7 +38,6 @@ class EditAccountContainer extends React.Component<IProps, IState> {
     uploading: false
   };
   public render() {
-    const { history } = this.props;
     const { firstName, lastName, email, profilePhoto, uploading } = this.state;
     return (
       <ProfileQuery
@@ -60,11 +59,6 @@ class EditAccountContainer extends React.Component<IProps, IState> {
               const { UpdateMyProfile } = data;
               if (UpdateMyProfile.ok) {
                 toast.success("Profile updated!");
-                setTimeout(() => {
-                  history.push({
-                    pathname: "/verify-phone"
-                  });
-                }, 1000);
               } else if (UpdateMyProfile.error) {
                 toast.error(UpdateMyProfile.error);
               }
