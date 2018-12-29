@@ -9,6 +9,7 @@ import {
 import { UPDATE_PROFILE } from "./EditAccountQueries";
 import { RouteComponentProps } from "react-router";
 import { USER_PROFILE } from "../../sharedQueries";
+import { toast } from "react-toastify";
 
 interface IState {
   firstName: string;
@@ -46,6 +47,15 @@ class EditAccountContainer extends React.Component<IProps, IState> {
               email,
               profilePhoto
             }}
+            refetchQueries={[{ query: USER_PROFILE }]}
+            onCompleted={data => {
+              const { UpdateMyProfile } = data;
+              if (UpdateMyProfile.ok) {
+                toast.success("Profile updated!");
+              } else if (UpdateMyProfile.error) {
+                toast.error(UpdateMyProfile.error);
+              }
+            }}
           >
             {(updateProfileFn, { loading }) => (
               <EditAccountPresenter
@@ -74,6 +84,7 @@ class EditAccountContainer extends React.Component<IProps, IState> {
   };
 
   public updateFields = (data: {} | userProfile) => {
+    console.log(data);
     if ("GetMyProfile" in data) {
       const {
         GetMyProfile: { user }
