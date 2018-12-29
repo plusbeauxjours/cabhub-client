@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import EditAccountPresenter from "./EditAccountPresenter";
 import { Mutation, Query } from "react-apollo";
@@ -16,6 +17,7 @@ interface IState {
   lastName: string;
   email: string;
   profilePhoto: string;
+  uploading: boolean;
 }
 
 interface IProps extends RouteComponentProps<any> {}
@@ -32,12 +34,17 @@ class EditAccountContainer extends React.Component<IProps, IState> {
     firstName: "",
     lastName: "",
     email: "",
-    profilePhoto: ""
+    profilePhoto: "",
+    uploading: false
   };
   public render() {
-    const { firstName, lastName, email, profilePhoto } = this.state;
+    const { firstName, lastName, email, profilePhoto, uploading } = this.state;
     return (
-      <ProfileQuery query={USER_PROFILE} onCompleted={this.updateFields}>
+      <ProfileQuery
+        query={USER_PROFILE}
+        fetchPolicy={"cache-and-network"}
+        onCompleted={this.updateFields}
+      >
         {() => (
           <UpdateProfileMutation
             mutation={UPDATE_PROFILE}
@@ -66,6 +73,7 @@ class EditAccountContainer extends React.Component<IProps, IState> {
                 onInputChange={this.onInputChange}
                 loading={loading}
                 onSubmit={updateProfileFn}
+                uploading={uploading}
               />
             )}
           </UpdateProfileMutation>
@@ -73,10 +81,28 @@ class EditAccountContainer extends React.Component<IProps, IState> {
       </ProfileQuery>
     );
   }
-  public onInputChange: React.ChangeEventHandler<HTMLInputElement> = event => {
+  public onInputChange: React.ChangeEventHandler<
+    HTMLInputElement
+  > = async event => {
     const {
-      target: { name, value }
+      target: { name, value, files }
     } = event;
+
+    if (files) {
+      this.setState({
+        uploading: true
+      });
+      const formData = new FormData();
+      formData.append("file", files[0]);
+      formData.append("api_key", "594384444544323");
+      formData.append("upload_preset", "pfc3d7u2");
+      formData.append("timestamp", String(Date.now() / 1000));
+      const request = await axios.post(
+        "https://api.cloudinary.com/v1_1/dadrhcd5b/image/upload",
+        formData
+      );
+      console.log(request);
+    }
 
     this.setState({
       [name]: value
@@ -95,7 +121,8 @@ class EditAccountContainer extends React.Component<IProps, IState> {
           firstName,
           lastName,
           email,
-          profilePhoto
+          profilePhoto,
+          uploaded: profilePhoto !== null
         } as any);
       }
     }

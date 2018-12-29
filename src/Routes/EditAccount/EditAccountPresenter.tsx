@@ -6,6 +6,7 @@ import { MutationFn } from "react-apollo";
 import Form from "../../Components/Form/Form";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
+import PhotoInput from "src/Components/PhotoInput";
 
 const Container = styled.div``;
 
@@ -25,6 +26,7 @@ interface IProps {
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   loading: boolean;
   onSubmit: MutationFn;
+  uploading: boolean;
 }
 
 const EditAccountPresenter: React.SFC<IProps> = ({
@@ -34,7 +36,8 @@ const EditAccountPresenter: React.SFC<IProps> = ({
   profilePhoto,
   onInputChange,
   loading,
-  onSubmit
+  onSubmit,
+  uploading
 }) => (
   <Container>
     <Helmet>
@@ -42,6 +45,11 @@ const EditAccountPresenter: React.SFC<IProps> = ({
     </Helmet>
     <Header title={"Edit Account"} backTo={"/"} />
     <ExtendedForm submitFn={onSubmit}>
+      <PhotoInput
+        uploading={uploading}
+        fileUrl={profilePhoto}
+        onChange={onInputChange}
+      />
       <ExtendedInput
         onChange={onInputChange}
         type={"text"}
