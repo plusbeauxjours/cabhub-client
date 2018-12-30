@@ -48,12 +48,6 @@ class EditAccountContainer extends React.Component<IProps, IState> {
         {() => (
           <UpdateProfileMutation
             mutation={UPDATE_PROFILE}
-            variables={{
-              firstName,
-              lastName,
-              email,
-              profilePhoto
-            }}
             refetchQueries={[{ query: USER_PROFILE }]}
             onCompleted={data => {
               const { UpdateMyProfile } = data;
@@ -62,6 +56,12 @@ class EditAccountContainer extends React.Component<IProps, IState> {
               } else if (UpdateMyProfile.error) {
                 toast.error(UpdateMyProfile.error);
               }
+            }}
+            variables={{
+              firstName,
+              lastName,
+              email,
+              profilePhoto
             }}
           >
             {(updateProfileFn, { loading }) => (
