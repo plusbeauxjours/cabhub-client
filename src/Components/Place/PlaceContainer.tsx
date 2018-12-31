@@ -6,10 +6,10 @@ import PlacePresenter from "./PlacePresenter";
 import { EDIT_PLACE } from "./PlaceQueries";
 
 interface IProps {
+  id: number;
   fav: boolean;
   name: string;
   address: string;
-  id: number;
 }
 
 class FavMutation extends Mutation<editPlace, editPlaceVariables> {}
@@ -21,17 +21,17 @@ class PlaceContainer extends React.Component<IProps> {
       <FavMutation
         mutation={EDIT_PLACE}
         variables={{
-          isFav: !fav,
-          placeId: id
+          placeId: id,
+          isFav: !fav
         }}
         refetchQueries={[{ query: GET_PLACES }]}
       >
         {editPlaceFn => (
           <PlacePresenter
-            onStarPress={editPlaceFn}
             fav={fav}
             name={name}
             address={address}
+            onStarPress={editPlaceFn}
           />
         )}
       </FavMutation>
