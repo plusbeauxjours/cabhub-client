@@ -23,7 +23,7 @@ const PlacesPresenter: React.SFC<IProps> = ({
   data: { GetMyPlaces: { places = null } = {} } = {},
   loading
 }) => (
-  <React.Component>
+  <React.Fragment>
     <Helmet>
       <title>Places | Puber</title>
     </Helmet>
@@ -43,7 +43,7 @@ const PlacesPresenter: React.SFC<IProps> = ({
         ))}
       <SLink to={"/add-place"}>Please add some places</SLink>
     </Container>
-  </React.Component>
+  </React.Fragment>
 );
 
 export default PlacesPresenter;

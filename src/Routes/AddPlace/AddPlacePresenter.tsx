@@ -37,7 +37,7 @@ const AddPlacePresenter: React.SFC<IProps> = ({
   loading,
   onSubmit
 }) => (
-  <React.Component>
+  <React.Fragment>
     <Helmet>
       <title>Add Place | Puber</title>
     </Helmet>
@@ -62,7 +62,7 @@ const AddPlacePresenter: React.SFC<IProps> = ({
         <Button onClick={null} value={loading ? "Adding place" : "AdPlace"} />
       </Form>
     </Container>
-  </React.Component>
+  </React.Fragment>
 );
 
 export default AddPlacePresenter;

@@ -60,11 +60,11 @@ const SettingsPresenter: React.SFC<IProps> = ({
 }) => (
   <React.Fragment>
     <Helmet>
-      <title>Settings | Puber</title>
+      <title>Settings | Nuber</title>
     </Helmet>
-    <Header title="Account Settings" backTo={"/"} />
+    <Header title={"Account Settings"} backTo={"/"} />
     <Container>
-      <GridLink to={"/edit-acount"}>
+      <GridLink to={"/edit-account"}>
         {!userDataLoading &&
           user &&
           user.profilePhoto &&
