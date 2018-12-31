@@ -1,26 +1,26 @@
 import React from "react";
-import styled from "../../typed-components";
 import { MutationFn } from "react-apollo";
-
-const Container = styled.div`
-  margin-left: 10px;
-`;
+import styled from "../../typed-components";
 
 const Place = styled.div`
   margin: 15px 0;
   display: flex;
   align-items: center;
-  &i {
+  & i {
     font-size: 12px;
   }
 `;
 
-const Icon = styled.span`
-  cursor: pointer;
+const Container = styled.div`
+  margin-left: 10px;
 `;
 
 const Name = styled.span`
   display: block;
+`;
+
+const Icon = styled.span`
+  cursor: pointer;
 `;
 
 const Address = styled.span`
@@ -32,17 +32,17 @@ interface IProps {
   fav: boolean;
   name: string;
   address: string;
-  onstarPress: MutationFn;
+  onStarPress: MutationFn;
 }
 
 const PlacePresenter: React.SFC<IProps> = ({
+  onStarPress,
   fav,
   name,
-  address,
-  onstarPress
+  address
 }) => (
   <Place>
-    <Icon onClick={onstarPress as any}>{fav ? "★" : "✩"} </Icon>
+    <Icon onClick={onStarPress as any}>{fav ? "★" : "✩"}</Icon>
     <Container>
       <Name>{name}</Name>
       <Address>{address}</Address>

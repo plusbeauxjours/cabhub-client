@@ -4,7 +4,7 @@ import Helmet from "react-helmet";
 import styled from "src/typed-components";
 import Header from "../../Components/Header/Header";
 import { Link } from "react-router-dom";
-import Place from "../../Components/Place/index";
+import Place from "../../Components/Place";
 
 const Container = styled.div`
   padding: 0 40px;
@@ -35,6 +35,7 @@ const PlacesPresenter: React.SFC<IProps> = ({
         places.map(place => (
           <Place
             key={place!.id}
+            id={place!.id}
             fav={place!.isFav}
             name={place!.name}
             address={place!.address}

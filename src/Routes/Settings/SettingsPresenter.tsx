@@ -5,7 +5,7 @@ import styled from "src/typed-components";
 import Helmet from "react-helmet";
 import Header from "../../Components/Header/index";
 import { Link } from "react-router-dom";
-import Place from "../../Components/Place/index";
+import Place from "../../Components/Place";
 
 const Container = styled.div`
   padding: 0px 40px;
