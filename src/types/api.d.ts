@@ -22,6 +22,29 @@ export interface toggleDriving {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: editPlace
+// ====================================================
+
+export interface editPlace_EditPlace {
+  __typename: "EditPlaceResponse";
+  ok: boolean;
+  error: string | null;
+}
+
+export interface editPlace {
+  EditPlace: editPlace_EditPlace;
+}
+
+export interface editPlaceVariables {
+  placeId: number;
+  isFav?: boolean | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: addPlace
 // ====================================================
 
@@ -73,6 +96,28 @@ export interface updateProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: reportMovemnet
+// ====================================================
+
+export interface reportMovemnet_ReportMovement {
+  __typename: "ReportMovementResponse";
+  ok: boolean;
+}
+
+export interface reportMovemnet {
+  ReportMovement: reportMovemnet_ReportMovement;
+}
+
+export interface reportMovemnetVariables {
+  lat: number;
+  lng: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: startPhoneVerification
 // ====================================================
 
@@ -88,29 +133,6 @@ export interface startPhoneVerification {
 
 export interface startPhoneVerificationVariables {
   phoneNumber: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: editPlace
-// ====================================================
-
-export interface editPlace_EditPlace {
-  __typename: "EditPlaceResponse";
-  ok: boolean;
-  error: string | null;
-}
-
-export interface editPlace {
-  EditPlace: editPlace_EditPlace;
-}
-
-export interface editPlaceVariables {
-  placeId: number;
-  isFav?: boolean | null;
 }
 
 
