@@ -3,6 +3,7 @@ import HomePresenter from "./HomePresenter";
 import { RouteComponentProps } from "react-router";
 import { Query, MutationFn, graphql } from "react-apollo";
 import {
+  getDrivers,
   userProfile,
   reportMovemnet,
   reportMovemnetVariables
@@ -11,7 +12,7 @@ import { USER_PROFILE } from "../../sharedQueries";
 import ReactDOM from "react-dom";
 import { geoCode } from "../../mapHelpers";
 import { toast } from "react-toastify";
-import { REPORT_LOCATION } from "./HomeQueries";
+import { REPORT_LOCATION, GET_NEARBY_DRIVERS } from "./HomeQueries";
 
 interface IState {
   isMenuOpen: boolean;
@@ -31,6 +32,7 @@ interface IProps extends RouteComponentProps<any> {
 }
 
 class ProfileQuery extends Query<userProfile> {}
+class NearbyQuery extends Query<getDrivers> {}
 
 class HomeContainer extends React.Component<IProps, IState> {
   public mapRef: any;
@@ -64,17 +66,22 @@ class HomeContainer extends React.Component<IProps, IState> {
     const { isMenuOpen, toAddress, price } = this.state;
     return (
       <ProfileQuery query={USER_PROFILE}>
-        {({ loading }) => (
-          <HomePresenter
-            isMenuOpen={isMenuOpen}
-            toggleMenu={this.toggleMenu}
-            loading={loading}
-            mapRef={this.mapRef}
-            toAddress={toAddress}
-            onInputChange={this.onInputChange}
-            onAddressSubmit={this.onAddressSubmit}
-            price={price}
-          />
+        {({ loading, data }) => (
+          <NearbyQuery query={GET_NEARBY_DRIVERS}>
+            {() => (
+              <HomePresenter
+                loading={loading}
+                isMenuOpen={isMenuOpen}
+                toggleMenu={this.toggleMenu}
+                mapRef={this.mapRef}
+                toAddress={toAddress}
+                onInputChange={this.onInputChange}
+                price={price}
+                data={data}
+                onAddressSubmit={this.onAddressSubmit}
+              />
+            )}
+          </NearbyQuery>
         )}
       </ProfileQuery>
     );
