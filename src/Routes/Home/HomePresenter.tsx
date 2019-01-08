@@ -5,7 +5,7 @@ import Sidebar from "react-sidebar";
 import Menu from "../../Components/Menu";
 import Button from "../../Components/Button/Button";
 import AddressBar from "../../Components/AddressBar";
-import { userProfile } from "../../types/api";
+import { userProfile, getRides } from "../../types/api";
 import { MutationFn } from "react-apollo";
 
 const Container = styled.div``;
@@ -58,6 +58,7 @@ interface IProps {
   price?: string;
   data?: userProfile;
   requestRideFn?: MutationFn;
+  nearbyRide?: getRides;
 }
 
 const HomePresenter: React.SFC<IProps> = ({
@@ -108,7 +109,7 @@ const HomePresenter: React.SFC<IProps> = ({
         <RequestButton
           onClick={requestRideFn}
           disabled={toAddress === ""}
-          value={`Request Ride{$${price})`}
+          value={`Request Ride ($${price})`}
         />
       )}
       <Map ref={mapRef} />
