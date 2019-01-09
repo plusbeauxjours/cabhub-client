@@ -1,5 +1,8 @@
 import React from "react";
+import styled from "src/typed-components";
 
-const RidePresenter: React.SFC = () => <span>RidePresenter</span>;
+const Container = styled.div``;
+
+const RidePresenter: React.SFC = () => <Container>RidePresenter</Container>;
 
 export default RidePresenter;

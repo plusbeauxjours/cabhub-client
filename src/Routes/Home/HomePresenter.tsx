@@ -1,13 +1,13 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "../../typed-components";
 import Helmet from "react-helmet";
 import Sidebar from "react-sidebar";
 import Menu from "../../Components/Menu";
-import Button from "../../Components/Button/Button";
+import Button from "../../Components/Button";
 import AddressBar from "../../Components/AddressBar";
-import { userProfile, getRides, acceptRide } from "../../types/api";
+import { userProfile, getRides } from "../../types/api";
 import { MutationFn } from "react-apollo";
-import RidePopUp from "src/Components/RidePopUp";
+import RidePopUp from "../../Components/RidePopUp";
 
 const Container = styled.div``;
 
@@ -18,19 +18,13 @@ const MenuButton = styled.button`
   top: 10px;
   left: 10px;
   text-align: center;
-  font-weight: 800;
+  font-weight: 600;
   border: 0;
   cursor: pointer;
   font-size: 20px;
   transform: rotate(90deg);
   z-index: 2;
   background-color: transparent;
-`;
-
-const Map = styled.div`
-  position: absolute;
-  height: 100%;
-  width: 100%;
 `;
 
 const ExtendedButton = styled(Button)`
@@ -46,6 +40,12 @@ const ExtendedButton = styled(Button)`
 
 const RequestButton = styled(ExtendedButton)`
   bottom: 100px;
+`;
+
+const Map = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
 `;
 
 interface IProps {
@@ -73,8 +73,8 @@ const HomePresenter: React.SFC<IProps> = ({
   onAddressSubmit,
   price,
   data: { GetMyProfile: { user = null } = {} } = {},
-  requestRideFn,
   nearbyRide: { GetNearbyRide: { ride = null } = {} } = {},
+  requestRideFn,
   acceptRideFn
 }) => (
   <Container>
