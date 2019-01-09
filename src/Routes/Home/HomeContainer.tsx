@@ -1,34 +1,34 @@
 import React from "react";
-import HomePresenter from "./HomePresenter";
-import { RouteComponentProps } from "react-router";
-import { Query, MutationFn, graphql, Mutation } from "react-apollo";
-import {
-  getRides,
-  getDrivers,
-  userProfile,
-  reportMovemnet,
-  reportMovemnetVariables,
-  requestRide,
-  requestRideVariables
-} from "../../types/api";
-import { USER_PROFILE } from "../../sharedQueries";
+import { graphql, Mutation, MutationFn, Query } from "react-apollo";
 import ReactDOM from "react-dom";
-import { geoCode, reverseGeoCode } from "../../mapHelpers";
+import { RouteComponentProps } from "react-router-dom";
 import { toast } from "react-toastify";
+import { geoCode, reverseGeoCode } from "../../mapHelpers";
+import { USER_PROFILE } from "../../sharedQueries";
 import {
+  getDrivers,
+  getRides,
+  reportMovement,
+  reportMovementVariables,
+  requestRide,
+  requestRideVariables,
+  userProfile
+} from "../../types/api";
+import HomePresenter from "./HomePresenter";
+import {
+  GET_NEARBY_DRIVERS,
   GET_NEARBY_RIDE,
   REPORT_LOCATION,
-  GET_NEARBY_DRIVERS,
   REQUEST_RIDE
 } from "./HomeQueries";
 
 interface IState {
   isMenuOpen: boolean;
-  lat: number;
-  lng: number;
   toAddress: string;
   toLat: number;
   toLng: number;
+  lat: number;
+  lng: number;
   distance: string;
   duration?: string;
   price?: string;
@@ -54,18 +54,18 @@ class HomeContainer extends React.Component<IProps, IState> {
   public directions: google.maps.DirectionsRenderer;
   public drivers: google.maps.Marker[];
   public state = {
+    distance: "",
+    duration: undefined,
+    fromAddress: "",
+    isDriving: true,
     isMenuOpen: false,
     lat: 0,
     lng: 0,
+    price: undefined,
     toAddress:
       "133 Changhuak Rd, Tambon Si Phum, Amphoe Mueang Chiang Mai, Chang Wat Chiang Mai 50300 태국",
     toLat: 0,
-    toLng: 0,
-    distance: "",
-    duration: undefined,
-    price: undefined,
-    fromAddress: "",
-    isDriving: true
+    toLng: 0
   };
   constructor(props) {
     super(props);
@@ -169,11 +169,7 @@ class HomeContainer extends React.Component<IProps, IState> {
       });
     }
   };
-  public handleGeoError = () => {
-    console.log("No location");
-  };
   public loadMap = (lat, lng) => {
-    console.log(lat, lng);
     const { google } = this.props;
     const maps = google.maps;
     const mapNode = ReactDOM.findDOMNode(this.mapRef.current);
@@ -187,8 +183,7 @@ class HomeContainer extends React.Component<IProps, IState> {
         lng
       },
       disableDefaultUI: true,
-      minZoom: 8,
-      zoom: 16
+      zoom: 13
     };
     this.map = new maps.Map(mapNode, mapConfig);
     const userMarkerOptions: google.maps.MarkerOptions = {
@@ -227,7 +222,10 @@ class HomeContainer extends React.Component<IProps, IState> {
     });
   };
   public handleGeoWatchError = () => {
-    console.log("Error Watching you");
+    console.log("Error watching you");
+  };
+  public handleGeoError = () => {
+    console.log("No location");
   };
   public onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -244,11 +242,6 @@ class HomeContainer extends React.Component<IProps, IState> {
     const result = await geoCode(toAddress);
     if (result !== false) {
       const { lat, lng, formatted_address: formatedAddress } = result;
-      this.setState({
-        toAddress: formatedAddress,
-        toLat: lat,
-        toLng: lng
-      });
       if (this.toMarker) {
         this.toMarker.setMap(null);
       }
@@ -286,7 +279,7 @@ class HomeContainer extends React.Component<IProps, IState> {
       suppressMarkers: true
     };
     this.directions = new google.maps.DirectionsRenderer(renderOptions);
-    const directionService: google.maps.DirectionsService = new google.maps.DirectionsService();
+    const directionsService: google.maps.DirectionsService = new google.maps.DirectionsService();
     const to = new google.maps.LatLng(toLat, toLng);
     const from = new google.maps.LatLng(lat, lng);
     const directionsOptions: google.maps.DirectionsRequest = {
@@ -294,7 +287,7 @@ class HomeContainer extends React.Component<IProps, IState> {
       origin: from,
       travelMode: google.maps.TravelMode.DRIVING
     };
-    directionService.route(directionsOptions, this.handleRouteRequest);
+    directionsService.route(directionsOptions, this.handleRouteRequest);
   };
   public handleRouteRequest = (
     result: google.maps.DirectionsResult,
@@ -316,7 +309,7 @@ class HomeContainer extends React.Component<IProps, IState> {
         this.setPrice
       );
     } else {
-      toast.error("There is no rout there, you have to swim");
+      toast.error("There is no route there, you have to swim ");
     }
   };
   public setPrice = () => {
@@ -333,38 +326,39 @@ class HomeContainer extends React.Component<IProps, IState> {
         GetNearbyDrivers: { drivers, ok }
       } = data;
       if (ok && drivers) {
-        {
-          for (const driver of drivers) {
-            if (driver && driver.lastLat && driver.lastLng) {
-              const existingDriver:
-                | google.maps.Marker
-                | undefined = this.drivers.find(
-                (driverMarker: google.maps.Marker) => {
-                  const markerID = driverMarker.get("ID");
-                  return markerID === driver.id;
-                }
-              );
-              if (existingDriver) {
-                existingDriver.setPosition({
+        for (const driver of drivers) {
+          if (driver && driver.lastLat && driver.lastLng) {
+            const exisitingDriver:
+              | google.maps.Marker
+              | undefined = this.drivers.find(
+              (driverMarker: google.maps.Marker) => {
+                const markerID = driverMarker.get("ID");
+                return markerID === driver.id;
+              }
+            );
+            if (exisitingDriver) {
+              exisitingDriver.setPosition({
+                lat: driver.lastLat,
+                lng: driver.lastLng
+              });
+              exisitingDriver.setMap(this.map);
+            } else {
+              const markerOptions: google.maps.MarkerOptions = {
+                icon: {
+                  path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                  scale: 5
+                },
+                position: {
                   lat: driver.lastLat,
                   lng: driver.lastLng
-                });
-                existingDriver.setMap(this.map);
-              } else {
-                const markerOptions: google.maps.MarkerOptions = {
-                  icon: {
-                    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-                    scale: 5
-                  },
-                  position: { lat: driver.lastLat, lng: driver.lastLng }
-                };
-                const newMarker: google.maps.Marker = new google.maps.Marker(
-                  markerOptions
-                );
-                this.drivers.push(newMarker);
-                newMarker.set("ID", driver.id);
-                newMarker.setMap(this.map);
-              }
+                }
+              };
+              const newMarker: google.maps.Marker = new google.maps.Marker(
+                markerOptions
+              );
+              this.drivers.push(newMarker);
+              newMarker.set("ID", driver.id);
+              newMarker.setMap(this.map);
             }
           }
         }
@@ -374,7 +368,7 @@ class HomeContainer extends React.Component<IProps, IState> {
   public handleRideRequest = (data: requestRide) => {
     const { RequestRide } = data;
     if (RequestRide.ok) {
-      toast.success("Drive requested, findinga d driver");
+      toast.success("Drive requested, finding a driver");
     } else {
       toast.error(RequestRide.error);
     }
@@ -392,7 +386,7 @@ class HomeContainer extends React.Component<IProps, IState> {
   };
 }
 
-export default graphql<any, reportMovemnet, reportMovemnetVariables>(
+export default graphql<any, reportMovement, reportMovementVariables>(
   REPORT_LOCATION,
   {
     name: "reportLocation"

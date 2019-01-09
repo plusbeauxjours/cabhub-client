@@ -96,19 +96,19 @@ export interface updateProfileVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: reportMovemnet
+// GraphQL mutation operation: reportMovement
 // ====================================================
 
-export interface reportMovemnet_ReportMovement {
+export interface reportMovement_ReportMovement {
   __typename: "ReportMovementResponse";
   ok: boolean;
 }
 
-export interface reportMovemnet {
-  ReportMovement: reportMovemnet_ReportMovement;
+export interface reportMovement {
+  ReportMovement: reportMovement_ReportMovement;
 }
 
-export interface reportMovemnetVariables {
+export interface reportMovementVariables {
   lat: number;
   lng: number;
 }
