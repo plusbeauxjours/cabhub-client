@@ -1,11 +1,21 @@
 import React from "react";
 import RidePresenter from "./RidePresenter";
 import { RouteComponentProps } from "react-router-dom";
-import { Query } from "react-apollo";
-import { getRide, getRideVariables } from "../../types/api";
-import { GET_RIDE } from "./RideQueries";
+import { Query, Mutation } from "react-apollo";
+import {
+  getRide,
+  getRideVariables,
+  userProfile,
+  updateRide,
+  updateRideVariables
+} from "../../types/api";
+import { GET_RIDE, UPDATE_RIDE_STATUS, RIDE_SUBSCRIPTION } from "./RideQueries";
+import { USER_PROFILE } from "../../sharedQueries";
+import { SubscribeToMoreOptions } from "apollo-client";
 
 class RideQuery extends Query<getRide, getRideVariables> {}
+class ProfileQuery extends Query<userProfile> {}
+class RideUpdate extends Mutation<updateRide, updateRideVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
@@ -21,11 +31,41 @@ class RideContainer extends React.Component<IProps> {
       match: {
         params: { rideId }
       }
-    };
+    } = this.props;
     return (
-      <RideQuery query={GET_RIDE} variables={{ rideId }}>
-        {data => <RidePresenter data={data} />}
-      </RideQuery>
+      <ProfileQuery query={USER_PROFILE}>
+        {({ data: userData }) => (
+          <RideQuery query={GET_RIDE} variables={{ rideId }}>
+            {({ data, loading, subscribeToMore }) => {
+              const subscribeOptions: SubscribeToMoreOptions = {
+                document: RIDE_SUBSCRIPTION,
+                updateQuery: (prev, { subscriptionData }) => {
+                  if (!subscriptionData.data) {
+                    return prev;
+                  }
+                  console.log(prev, subscriptionData);
+                }
+              };
+              subscribeToMore(subscribeOptions);
+              return (
+                <RideUpdate
+                  mutation={UPDATE_RIDE_STATUS}
+                  refetchQueries={GET_RIDE}
+                >
+                  {updateRideFn => (
+                    <RidePresenter
+                      userData={userData}
+                      loading={loading}
+                      data={data}
+                      updateRideFn={updateRideFn}
+                    />
+                  )}
+                </RideUpdate>
+              );
+            }}
+          </RideQuery>
+        )}
+      </ProfileQuery>
     );
   }
 }
