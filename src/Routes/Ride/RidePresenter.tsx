@@ -1,9 +1,9 @@
 import React from "react";
-import styled from "src/typed-components";
-import { getRide, userProfile } from "../../types/api";
 import { MutationFn } from "react-apollo";
-import Button from "../../Components/Button/Button";
 import { Link } from "react-router-dom";
+import Button from "../../Components/Button";
+import styled from "../../typed-components";
+import { getRide, userProfile } from "../../types/api";
 
 const Container = styled.div`
   padding: 40px;
@@ -67,8 +67,8 @@ const RidePresenter: React.SFC<IProps> = ({
           <React.Fragment>
             <Title>Driver</Title>
             <Passenger>
-              <Img src={ride.driver.profilePhoto} />
-              <Data>{ride.driver.fullName}</Data>
+              <Img src={ride.driver.profilePhoto!} />
+              <Data>{ride.driver.fullName!}</Data>
             </Passenger>
           </React.Fragment>
         )}
@@ -90,23 +90,29 @@ const RidePresenter: React.SFC<IProps> = ({
               value={"Picked Up"}
               onClick={() =>
                 updateRideFn({
-                  variables: { rideId: ride.id, staus: "ONROUTE" }
+                  variables: {
+                    rideId: ride.id,
+                    status: "ONROUTE"
+                  }
                 })
               }
             />
           )}
           {ride.driver.id === user.id && ride.status === "ONROUTE" && (
             <ExtendedButton
-              value={"Finshed"}
+              value={"Finished"}
               onClick={() =>
                 updateRideFn({
-                  variables: { rideId: ride.id, status: "FINISHED" }
+                  variables: {
+                    rideId: ride.id,
+                    status: "FINISHED"
+                  }
                 })
               }
             />
           )}
           {ride.driver.id === user.id ||
-            (ride.passenger.id === user.id && ride.status === "ACCEPTED" && (
+            (ride.passenger.id === user.id && ride.status !== "REQUESTING" && (
               <Link to={`/chat/${ride.chatId}`}>
                 <ExtendedButton value={"Chat"} onClick={null} />
               </Link>
@@ -116,5 +122,4 @@ const RidePresenter: React.SFC<IProps> = ({
     )}
   </Container>
 );
-
 export default RidePresenter;
