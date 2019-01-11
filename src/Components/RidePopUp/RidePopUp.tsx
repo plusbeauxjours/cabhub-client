@@ -37,6 +37,8 @@ const Passenger = styled.div`
 const Img = styled.img`
   border-radius: 50%;
   margin-right: 20px;
+  max-width: 50px;
+  height: 50px;
 `;
 
 interface IProps {
