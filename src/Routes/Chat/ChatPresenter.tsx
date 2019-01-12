@@ -61,7 +61,7 @@ const ChatPresenter: React.SFC<IProps> = ({
           <Form submitFn={onSubmit}>
             <Input
               value={messageText}
-              placeHolder={"Type your message"}
+              placeholder={"Type your message"}
               onChange={onInputChange}
               name={"message"}
             />
