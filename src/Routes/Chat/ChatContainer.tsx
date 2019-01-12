@@ -1,20 +1,19 @@
+import { SubscribeToMoreOptions } from "apollo-client";
 import React from "react";
-import { RouteComponentProps } from "react-router";
-import ChatPresenter from "./ChatPresenter";
-import { Query, Mutation, MutationFn } from "react-apollo";
-import { userProfile } from "src/types/api";
+import { Mutation, MutationFn, Query } from "react-apollo";
+import { RouteComponentProps } from "react-router-dom";
+import { USER_PROFILE } from "../../sharedQueries";
 import {
   getChat,
   getChatVariables,
   sendMessage,
-  sendMessageVariables
+  sendMessageVariables,
+  userProfile
 } from "../../types/api";
-import { USER_PROFILE } from "../../sharedQueries";
+import ChatPresenter from "./ChatPresenter";
 import { GET_CHAT, SEND_MESSAGE, SUBSCRIBE_TO_MESSAGES } from "./ChatQueries";
-import { SubscribeToMoreOptions } from "apollo-client";
 
 interface IProps extends RouteComponentProps<any> {}
-
 interface IState {
   message: "";
 }
@@ -44,13 +43,27 @@ class ChatContainer extends React.Component<IProps, IState> {
     return (
       <ProfileQuery query={USER_PROFILE}>
         {({ data: userData }) => (
-          <ChatQuery query={GET_CHAT}>
+          <ChatQuery query={GET_CHAT} variables={{ chatId }}>
             {({ data, loading, subscribeToMore }) => {
               const subscribeToMoreOptions: SubscribeToMoreOptions = {
                 document: SUBSCRIBE_TO_MESSAGES,
                 updateQuery: (prev, { subscriptionData }) => {
                   if (!subscriptionData.data) {
                     return prev;
+                  }
+                  const {
+                    data: { MessageSubscription }
+                  } = subscriptionData;
+                  const {
+                    GetChat: {
+                      chat: { messages }
+                    }
+                  } = prev;
+                  const newMessageId = MessageSubscription.id;
+                  const latestMessageId = messages[messages.length - 1].id;
+
+                  if (newMessageId === latestMessageId) {
+                    return;
                   }
                   const newObject = Object.assign({}, prev, {
                     GetChat: {
@@ -59,7 +72,7 @@ class ChatContainer extends React.Component<IProps, IState> {
                         ...prev.GetChat.chat,
                         messages: [
                           ...prev.GetChat.chat.messages,
-                          subscriptionData.data.MessageSubscription
+                          MessageSubscription
                         ]
                       }
                     }
