@@ -1,15 +1,14 @@
 import React from "react";
 import Header from "../../Components/Header/index";
 import styled from "../../typed-components";
-import { getChat, userProfile } from "../../types/api";
 import Message from "../../Components/Message";
 import Form from "src/Components/Form";
 import Input from "../../Components/Input/Input";
 
 interface IProps {
   loading: boolean;
-  data?: getChat;
-  userData?: userProfile;
+  data?: any;
+  userData?: any;
   messageText: string;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: () => void;
