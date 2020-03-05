@@ -1,12 +1,12 @@
 import React from "react";
-import styled from "styled-components";
-import Input from "../../Components/Input/Input";
-import Helmet from "react-helmet";
-import Header from "../../Components/Header/Header";
-import Form from "../../Components/Form/Form";
-import { Link } from "react-router-dom";
-import Button from "../../Components/Button/Button";
 import { MutationFn } from "react-apollo";
+import Helmet from "react-helmet";
+import { Link } from "react-router-dom";
+import Button from "../../Components/Button";
+import Form from "../../Components/Form";
+import Header from "../../Components/Header";
+import Input from "../../Components/Input";
+import styled from "../../typed-components";
 
 const Container = styled.div`
   padding: 0 40px;
@@ -20,6 +20,12 @@ const ExtendedLink = styled(Link)`
   text-decoration: underline;
   margin-bottom: 20px;
   display: block;
+`;
+
+const Slim = styled.span`
+  font-size: 10px;
+  text-decoration: underline;
+  margin-bottom: 20px;
 `;
 
 interface IProps {
@@ -59,10 +65,16 @@ const AddPlacePresenter: React.SFC<IProps> = ({
           onChange={onInputChange}
           value={address}
           name={"address"}
+          disabled={true}
         />
-        <ExtendedLink to={"/find-address"}>Pick place from map</ExtendedLink>
+        <Slim>
+          <ExtendedLink to={"/find-address"}>Pick place from map</ExtendedLink>
+        </Slim>
         {pickedAddress && (
-          <Button onClick={null} value={loading ? "Adding place" : "AdPlace"} />
+          <Button
+            onClick={null}
+            value={loading ? "Adding place" : "Add Place"}
+          />
         )}
       </Form>
     </Container>

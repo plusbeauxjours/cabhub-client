@@ -12,10 +12,22 @@ const Container = styled.div``;
 
 const ExtendedForm = styled(Form)`
   padding: 0px 40px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  align-items: center;
 `;
 
 const ExtendedInput = styled(Input)`
   margin-bottom: 30px;
+  text-align: center;
+`;
+
+const FormContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 interface IProps {
@@ -44,35 +56,37 @@ const EditAccountPresenter: React.SFC<IProps> = ({
       <title>Edit Account | Puber</title>
     </Helmet>
     <Header title={"Edit Account"} backTo={"/"} />
-    <ExtendedForm submitFn={onSubmit}>
-      <PhotoInput
-        uploading={uploading}
-        fileUrl={profilePhoto}
-        onChange={onInputChange}
-      />
-      <ExtendedInput
-        onChange={onInputChange}
-        type={"text"}
-        value={firstName}
-        placeholder={"First name"}
-        name={"firstName"}
-      />
-      <ExtendedInput
-        onChange={onInputChange}
-        type={"text"}
-        value={lastName}
-        placeholder={"Last name"}
-        name={"lastName"}
-      />
-      <ExtendedInput
-        onChange={onInputChange}
-        type={"email"}
-        value={email}
-        placeholder={"Email"}
-        name={"email"}
-      />
-      <Button onClick={null} value={loading ? "Loading" : "Update"} />
-    </ExtendedForm>
+    <FormContainer>
+      <ExtendedForm submitFn={onSubmit}>
+        <PhotoInput
+          uploading={uploading}
+          fileUrl={profilePhoto}
+          onChange={onInputChange}
+        />
+        <ExtendedInput
+          onChange={onInputChange}
+          type={"text"}
+          value={firstName}
+          placeholder={"First name"}
+          name={"firstName"}
+        />
+        <ExtendedInput
+          onChange={onInputChange}
+          type={"text"}
+          value={lastName}
+          placeholder={"Last name"}
+          name={"lastName"}
+        />
+        <ExtendedInput
+          onChange={onInputChange}
+          type={"email"}
+          value={email}
+          placeholder={"Email"}
+          name={"email"}
+        />
+        <Button onClick={null} value={loading ? "Loading" : "Update"} />
+      </ExtendedForm>
+    </FormContainer>
   </Container>
 );
 

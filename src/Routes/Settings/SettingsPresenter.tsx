@@ -6,31 +6,44 @@ import Helmet from "react-helmet";
 import Header from "../../Components/Header/index";
 import { Link } from "react-router-dom";
 import Place from "../../Components/Place";
+import Loader from "../../Components/Loader";
 
 const Container = styled.div`
+  display: flex;
+  margin-top: 150px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 0px 40px;
 `;
 
-const GridLink = styled(Link)`
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-gap: 10px;
-  margin-bottom: 10px;
+const Box = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  margin-bottom: 30px;
 `;
 
 const Image = styled.img`
-  height: 60px;
-  width: 60px;
+  height: 150px;
+  width: 150px;
   border-radius: 50%;
+  margin-bottom: 20px;
 `;
 
-const Keys = styled.div``;
+const Keys = styled.div`
+  text-align: center;
+`;
 
-const SLink = styled(Link)`
-  display: block;
+const Bold = styled.span`
+  font-size: 24px;
+  font-weight: 600;
+`;
+
+const Slim = styled.span`
+  font-size: 10px;
   text-decoration: underline;
-  margin: 20px 0px;
+  margin-bottom: 20px;
 `;
 
 const Key = styled.span`
@@ -57,43 +70,54 @@ const SettingsPresenter: React.SFC<IProps> = ({
   placesLoading,
   placesData: { GetMyPlaces: { places = null } = {} } = {},
   logUserOut
-}) => (
-  <React.Fragment>
-    <Helmet>
-      <title>Settings | Puber</title>
-    </Helmet>
-    <Header title={"Account Settings"} backTo={"/"} />
-    <Container>
-      <GridLink to={"/edit-account"}>
-        {!userDataLoading &&
-          user &&
-          user.profilePhoto &&
-          user.email &&
-          user.fullName && (
-            <React.Fragment>
-              <Image src={user.profilePhoto} />
-              <Keys>
-                <Key>{user.fullName}</Key>
-                <Key>{user.email}</Key>
-              </Keys>
-            </React.Fragment>
-          )}
-      </GridLink>
-      {!placesLoading &&
-        places &&
-        places.map(place => (
-          <Place
-            key={place!.id}
-            id={place!.id}
-            fav={place!.isFav}
-            name={place!.name}
-            address={place!.address}
-          />
-        ))}
-      <SLink to={"/places"}>Go to Places</SLink>
-      <FakeLink onClick={logUserOut as any}>Log Out</FakeLink>
-    </Container>
-  </React.Fragment>
-);
+}) => {
+  if (userDataLoading || placesLoading) {
+    return <Loader />;
+  } else {
+    return (
+      <React.Fragment>
+        <Helmet>
+          <title>Settings | Puber</title>
+        </Helmet>
+        <Header title={"Account Settings"} backTo={"/"} />
+        <Container>
+          {!userDataLoading &&
+            user &&
+            user.profilePhoto &&
+            user.email &&
+            user.fullName && (
+              <Box>
+                <Image src={user.profilePhoto} />
+                <Keys>
+                  <Bold>{user.fullName}</Bold>
+                  <Key>{user.email}</Key>
+                  <Slim>
+                    <Link to={"/edit-account"}>Edit Profile</Link>
+                  </Slim>
+                </Keys>
+              </Box>
+            )}
+          {!placesLoading &&
+            places &&
+            places.map(place => (
+              <Place
+                key={place!.id}
+                id={place!.id}
+                fav={place!.isFav}
+                name={place!.name}
+                address={place!.address}
+              />
+            ))}
+          <Slim>
+            <Link to={"/places"}>Go to Places</Link>
+          </Slim>
+          <Slim>
+            <FakeLink onClick={logUserOut as any}>Log Out</FakeLink>
+          </Slim>
+        </Container>
+      </React.Fragment>
+    );
+  }
+};
 
 export default SettingsPresenter;

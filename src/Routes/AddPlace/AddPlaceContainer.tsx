@@ -1,6 +1,6 @@
 import React from "react";
 import AddPlacePresenter from "./AddPlacePresenter";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { addPlace, addPlaceVariables } from "../../types/api";
 import { ADD_PLACE } from "./AddPlaceQueries";
@@ -21,7 +21,7 @@ class AddPlaceQuery extends Mutation<addPlace, addPlaceVariables> {}
 class AddPlaceContainer extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    const { location: { state = {} } = {} } = ({} = props);
+    const { location: { state = {} } = {} } = props;
     this.state = {
       address: state.address || "",
       lat: state.lat || 0,

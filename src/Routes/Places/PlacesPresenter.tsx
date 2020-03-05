@@ -8,12 +8,20 @@ import Place from "../../Components/Place";
 
 const Container = styled.div`
   padding: 0 40px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const SLink = styled(Link)`
   text-decoration: underline;
+  margin-top: 20px;
 `;
 
+const Slim = styled.span`
+  font-size: 10px;
+  text-decoration: underline;
+  margin-bottom: 20px;
+`;
 interface IProps {
   data?: getPlaces;
   loading: boolean;
@@ -41,7 +49,9 @@ const PlacesPresenter: React.SFC<IProps> = ({
             address={place!.address}
           />
         ))}
-      <SLink to={"/add-place"}>Please add some places</SLink>
+      <Slim>
+        <SLink to={"/add-place"}>Please add some places</SLink>
+      </Slim>
     </Container>
   </React.Fragment>
 );

@@ -39,6 +39,7 @@ interface IState {
   price?: string;
   fromAddress: string;
   isDriving: boolean;
+  mapLoading: boolean;
 }
 
 interface IProps extends RouteComponentProps<any> {
@@ -68,15 +69,19 @@ class HomeContainer extends React.Component<IProps, IState> {
     lat: 0,
     lng: 0,
     price: undefined,
-    toAddress:
-      "133 Changhuak Rd, Tambon Si Phum, Amphoe Mueang Chiang Mai, Chang Wat Chiang Mai 50300 태국",
+    toAddress: "",
     toLat: 0,
-    toLng: 0
+    toLng: 0,
+    mapLoading: true
   };
   constructor(props) {
     super(props);
     this.mapRef = React.createRef();
     this.drivers = [];
+    navigator.geolocation.getCurrentPosition(
+      this.handleGeoSuccess,
+      this.handleGeoError
+    );
   }
   public componentDidMount() {
     navigator.geolocation.getCurrentPosition(
@@ -84,6 +89,7 @@ class HomeContainer extends React.Component<IProps, IState> {
       this.handleGeoError
     );
   }
+
   public render() {
     const {
       isMenuOpen,
@@ -103,7 +109,7 @@ class HomeContainer extends React.Component<IProps, IState> {
         {({ loading, data }) => (
           <NearbyQuery
             query={GET_NEARBY_DRIVERS}
-            pollInterval={8000}
+            pollInterval={5000}
             onCompleted={this.handleNearbyDrivers}
             skip={isDriving}
           >
@@ -203,43 +209,47 @@ class HomeContainer extends React.Component<IProps, IState> {
       });
     }
   };
-  public loadMap = (lat, lng) => {
-    const { google } = this.props;
-    const maps = google.maps;
-    const mapNode = ReactDOM.findDOMNode(this.mapRef.current);
-    if (!mapNode) {
-      this.loadMap(lat, lng);
-      return;
-    }
-    const mapConfig: google.maps.MapOptions = {
-      center: {
-        lat,
-        lng
-      },
-      disableDefaultUI: true,
-      zoom: 13
-    };
-    this.map = new maps.Map(mapNode, mapConfig);
-    const userMarkerOptions: google.maps.MarkerOptions = {
-      icon: {
-        path: maps.SymbolPath.CIRCLE,
-        scale: 7
-      },
-      position: {
-        lat,
-        lng
+  public loadMap = async (lat, lng) => {
+    try {
+      const { google } = this.props;
+      const maps = await google.maps;
+      const mapNode = await ReactDOM.findDOMNode(this.mapRef.current);
+      if (!mapNode) {
+        this.loadMap(lat, lng);
+        return;
       }
-    };
-    this.userMarker = new maps.Marker(userMarkerOptions);
-    this.userMarker.setMap(this.map);
-    const watchOptions: PositionOptions = {
-      enableHighAccuracy: true
-    };
-    navigator.geolocation.watchPosition(
-      this.handleGeoWatchSuccess,
-      this.handleGeoWatchError,
-      watchOptions
-    );
+      const mapConfig: google.maps.MapOptions = {
+        center: {
+          lat,
+          lng
+        },
+        disableDefaultUI: true,
+        zoom: 13
+      };
+      this.map = new maps.Map(mapNode, mapConfig);
+      const userMarkerOptions: google.maps.MarkerOptions = {
+        icon: {
+          path: maps.SymbolPath.CIRCLE,
+          scale: 7
+        },
+        position: {
+          lat,
+          lng
+        }
+      };
+      this.userMarker = new maps.Marker(userMarkerOptions);
+      this.userMarker.setMap(this.map);
+      const watchOptions: PositionOptions = {
+        enableHighAccuracy: true
+      };
+      navigator.geolocation.watchPosition(
+        this.handleGeoWatchSuccess,
+        this.handleGeoWatchError,
+        watchOptions
+      );
+    } catch (e) {
+      console.log(e);
+    }
   };
   public handleGeoWatchSuccess = (position: Position) => {
     const { reportLocation } = this.props;
@@ -274,6 +284,7 @@ class HomeContainer extends React.Component<IProps, IState> {
     const { google } = this.props;
     const maps = google.maps;
     const result = await geoCode(toAddress);
+    console.log(result);
     if (result !== false) {
       const { lat, lng, formatted_address: formatedAddress } = result;
       if (this.toMarker) {

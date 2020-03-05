@@ -3,15 +3,16 @@ import { MutationFn } from "react-apollo";
 import { Link } from "react-router-dom";
 import styled from "../../typed-components";
 import { toggleDriving, userProfile } from "../../types/api";
+import { Gear } from "src/icons";
 
 const Container = styled.div`
   height: 100%;
+  max-width: 600px;
 `;
 
 const Header = styled.div`
   background-color: black;
-  height: 20%;
-  margin-bottom: 30px;
+  height: 400px;
   padding: 0 15px;
   color: white;
 `;
@@ -25,10 +26,12 @@ const SLink = styled(Link)`
 `;
 
 const Image = styled.img`
-  height: 80px;
-  width: 80px;
+  height: 150px;
+  width: 150px;
+  margin-bottom: 30px;
+  margin-top: 100px;
   background-color: grey;
-  border-radius: 40px;
+  border-radius: 75px;
   overflow: hidden;
 `;
 
@@ -41,22 +44,15 @@ const Name = styled.h2`
   text-overflow: ellipsis;
 `;
 
-const Rating = styled.h5`
-  font-size: 18px;
-  color: white;
-`;
-
 const Text = styled.span`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 `;
 
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-gap: 10px;
-  height: 100%;
+const Box = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: center;
 `;
 
@@ -76,6 +72,17 @@ const ToggleDriving = styled<IToggleProps, any>("button")`
   cursor: pointer;
 `;
 
+const NameContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Icon = styled.span`
+  svg {
+    fill: gray;
+  }
+`;
+
 interface IProps {
   data?: userProfile;
   loading: boolean;
@@ -91,18 +98,22 @@ const MenuPresenter: React.SFC<IProps> = ({
     {!loading && user && user.fullName && (
       <React.Fragment>
         <Header>
-          <Grid>
+          <Box>
             <Link to={"/edit-account"}>
               <Image src={user.profilePhoto || "+"} />
             </Link>
-            <Text>
-              <Name>{user.fullName}</Name>
-              <Rating>4.5</Rating>
-            </Text>
-          </Grid>
+            <NameContainer>
+              <Text>
+                <Name>{user.fullName}</Name>
+              </Text>
+              <SLink to="/settings">
+                <Icon>
+                  <Gear />
+                </Icon>
+              </SLink>
+            </NameContainer>
+          </Box>
         </Header>
-        <SLink to="/trips">Your Trips</SLink>
-        <SLink to="/settings">Settings</SLink>
         <ToggleDriving onClick={toggleDrivingFn} isDriving={user.isDriving}>
           {user.isDriving ? "Stop driving" : "Start driving"}
         </ToggleDriving>

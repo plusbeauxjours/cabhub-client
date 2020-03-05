@@ -14,20 +14,18 @@ const Input = styled.input`
 
 const Image = styled.label`
   cursor: pointer;
-  height: 80px;
-  width: 80px;
-  border: 2px solid black;
+  height: 150px;
+  width: 150px;
+  border: 1px solid black;
+  margin-left: 40px;
   display: block;
   border-radius: 50%;
   margin-bottom: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: 28px;
   overflow: hidden;
   & img {
-    width: 80px;
-    height: 80px;
+    width: 150px;
+    height: 150px;
   }
 `;
 

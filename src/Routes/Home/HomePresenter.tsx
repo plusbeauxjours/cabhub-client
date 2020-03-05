@@ -87,9 +87,10 @@ const HomePresenter: React.SFC<IProps> = ({
       onSetOpen={toggleMenu}
       styles={{
         sidebar: {
-          backgroundColor: "white",
           width: "80%",
-          zIndex: "10"
+          maxWidth: "600px",
+          backgroundColor: "white",
+          zIndex: "100"
         }
       }}
     >
