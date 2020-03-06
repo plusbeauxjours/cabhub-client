@@ -89,6 +89,13 @@ class HomeContainer extends React.Component<IProps, IState> {
       this.handleGeoSuccess,
       this.handleGeoError
     );
+    if (
+      this.state.toAddress !== "" &&
+      this.state.toLat === 0 &&
+      this.state.toLng === 0
+    ) {
+      this.onAddressSubmit();
+    }
   }
   public componentDidMount() {
     navigator.geolocation.getCurrentPosition(
