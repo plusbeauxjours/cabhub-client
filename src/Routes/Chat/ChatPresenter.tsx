@@ -49,7 +49,7 @@ const ChatPresenter: React.SFC<IProps> = ({
                   <Message
                     key={message.id}
                     text={message.text}
-                    mine={user.id === message.userId}
+                    mine={user.id === message.user.id}
                   />
                 );
               }

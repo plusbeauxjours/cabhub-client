@@ -24,11 +24,20 @@ const Box = styled.div`
   margin-bottom: 30px;
 `;
 
-const Image = styled.img`
+const Image = styled.label`
+  cursor: pointer;
   height: 150px;
   width: 150px;
+  border: 1px solid black;
+  display: block;
   border-radius: 50%;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
+  font-size: 28px;
+  overflow: hidden;
+  & img {
+    width: 150px;
+    height: 150px;
+  }
 `;
 
 const Keys = styled.div`
@@ -81,22 +90,18 @@ const SettingsPresenter: React.SFC<IProps> = ({
         </Helmet>
         <Header title={"Account Settings"} backTo={"/"} />
         <Container>
-          {!userDataLoading &&
-            user &&
-            user.profilePhoto &&
-            user.email &&
-            user.fullName && (
-              <Box>
-                <Image src={user.profilePhoto} />
-                <Keys>
-                  <Bold>{user.fullName}</Bold>
-                  <Key>{user.email}</Key>
-                  <Slim>
-                    <Link to={"/edit-account"}>Edit Profile</Link>
-                  </Slim>
-                </Keys>
-              </Box>
-            )}
+          {!userDataLoading && user && (
+            <Box>
+              <Image src={user.profilePhoto} />
+              <Keys>
+                <Bold>{user.fullName}</Bold>
+                <Key>{user.email}</Key>
+                <Slim>
+                  <Link to={"/edit-account"}>Edit Profile</Link>
+                </Slim>
+              </Keys>
+            </Box>
+          )}
           {!placesLoading &&
             places &&
             places.map(place => (

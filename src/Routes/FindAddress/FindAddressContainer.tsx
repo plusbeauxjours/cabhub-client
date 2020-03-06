@@ -48,7 +48,6 @@ class FindAddressContainer extends React.Component<IProps, IState> {
     const {
       coords: { latitude, longitude }
     } = position;
-    console.log(position);
     this.setState({
       lat: latitude,
       lng: longitude
@@ -125,7 +124,6 @@ class FindAddressContainer extends React.Component<IProps, IState> {
         lng
       }
     });
-    console.log(address, lat, lng);
   };
 }
 

@@ -103,7 +103,6 @@ class EditAccountContainer extends React.Component<IProps, IState> {
         "https://api.cloudinary.com/v1_1/dadrhcd5b/image/upload",
         formData
       );
-      console.log(secure_url);
       if (secure_url) {
         this.setState({
           profilePhoto: secure_url,
@@ -117,7 +116,6 @@ class EditAccountContainer extends React.Component<IProps, IState> {
   };
 
   public updateFields = (data: {} | userProfile) => {
-    console.log(data);
     if ("GetMyProfile" in data) {
       const {
         GetMyProfile: { user }

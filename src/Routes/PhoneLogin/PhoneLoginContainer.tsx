@@ -42,7 +42,6 @@ class PhoneLoginContainer extends React.Component<
           const { StartPhoneVerification } = data;
           const phone = `${countryCode}${phoneNumber}`;
           // tslint:disable-next-line
-          console.log(StartPhoneVerification);
           if (StartPhoneVerification.ok) {
             toast.success("SMS Sent! Redirectiong you...");
             setTimeout(() => {

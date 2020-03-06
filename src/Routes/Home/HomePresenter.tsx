@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "../../typed-components";
+import styled, { keyframes } from "../../typed-components";
 import Helmet from "react-helmet";
 import Sidebar from "react-sidebar";
 import Menu from "../../Components/Menu";
@@ -48,6 +48,51 @@ const Map = styled.div`
   width: 100%;
 `;
 
+const ModalAnimation = keyframes`
+	  from{
+	    opacity:0;
+	    transform:scale(1.1);
+	  }
+	  to{
+	    opacity:1;
+	    transform:none;
+	  }
+  `;
+
+const ModalContainer = styled.div`
+  z-index: 8;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+`;
+
+const ModalOverlay = styled.div`
+  z-index: 5;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: ${props => props.theme.modalOverlayColor};
+`;
+
+const Modal = styled.div`
+  top: 30%;
+  width: 400px;
+  @media screen and (max-width: 965px) {
+    width: 90%;
+  }
+  z-index: 10;
+  position: absolute;
+  margin-top: 80px;
+  animation: ${ModalAnimation} 0.1s linear;
+`;
+
 interface IProps {
   isMenuOpen: boolean;
   toggleMenu: () => void;
@@ -56,11 +101,14 @@ interface IProps {
   toAddress: string;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onAddressSubmit: () => void;
-  price?: string;
+  price?: number;
   data?: userProfile;
   requestRideFn?: MutationFn;
   nearbyRide?: getRides;
   acceptRideFn?: MutationFn;
+  toggleModal: () => void;
+  modalOpen: boolean;
+  updateRideFn: MutationFn;
 }
 
 const HomePresenter: React.SFC<IProps> = ({
@@ -75,7 +123,10 @@ const HomePresenter: React.SFC<IProps> = ({
   data: { GetMyProfile: { user = null } = {} } = {},
   nearbyRide: { GetNearbyRide: { ride = null } = {} } = {},
   requestRideFn,
-  acceptRideFn
+  acceptRideFn,
+  toggleModal,
+  modalOpen,
+  updateRideFn
 }) => (
   <Container>
     <Helmet>
@@ -106,28 +157,46 @@ const HomePresenter: React.SFC<IProps> = ({
           <ExtendedButton
             onClick={onAddressSubmit}
             disabled={toAddress === ""}
-            value={price ? "Change address" : "Pick Address"}
+            value={price === 0 ? "Change address" : "Pick Address"}
           />
         </React.Fragment>
       )}
-      {price && (
+      {price !== 0 && (
         <RequestButton
           onClick={requestRideFn}
           disabled={toAddress === ""}
           value={`Request Ride ($${price})`}
         />
       )}
-      {ride && (
-        <RidePopUp
-          id={ride.id}
-          pickUpAddress={ride.pickUpAddress}
-          dropOffAddress={ride.dropOffAddress}
-          price={ride.price}
-          distance={ride.distance}
-          passengerName={ride.passenger.fullName!}
-          passengerPhoto={ride.passenger.profilePhoto!}
-          acceptRideFn={acceptRideFn}
+      {user && user.isRiding && (
+        <RequestButton
+          onClick={() =>
+            updateRideFn({
+              variables: {
+                rideId: user.id,
+                status: "CANCELED"
+              }
+            })
+          }
+          value={"Cancel Ride"}
         />
+      )}
+      {ride && modalOpen && (
+        <ModalContainer>
+          <ModalOverlay onClick={toggleModal} />
+          <Modal>
+            <RidePopUp
+              id={ride.id}
+              pickUpAddress={ride.pickUpAddress}
+              dropOffAddress={ride.dropOffAddress}
+              price={ride.price}
+              distance={ride.distance}
+              passengerName={ride.passenger!.fullName!}
+              passengerPhoto={ride.passenger!.profilePhoto!}
+              acceptRideFn={acceptRideFn}
+            />
+          </Modal>
+        </ModalContainer>
       )}
       <Map ref={mapRef} />
     </Sidebar>

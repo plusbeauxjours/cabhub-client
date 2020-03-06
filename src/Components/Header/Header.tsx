@@ -28,7 +28,7 @@ interface IProps {
 }
 
 const Header: React.SFC<IProps> = ({ title, backTo }) => (
-  <Container>
+  <Container onClick={() => window.location.reload()}>
     {backTo && <BackArrow backTo={backTo} />}
     <Title>{title}</Title>
   </Container>

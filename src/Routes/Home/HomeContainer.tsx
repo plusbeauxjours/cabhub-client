@@ -15,9 +15,12 @@ import {
   reportMovementVariables,
   requestRide,
   requestRideVariables,
-  userProfile
+  userProfile,
+  updateRide,
+  updateRideVariables
 } from "../../types/api";
 import HomePresenter from "./HomePresenter";
+import { UPDATE_RIDE_STATUS } from "../Ride/RideQueries";
 import {
   ACCEPT_RIDE,
   GET_NEARBY_DRIVERS,
@@ -36,15 +39,17 @@ interface IState {
   lng: number;
   distance: string;
   duration?: string;
-  price?: string;
+  price?: number;
   fromAddress: string;
   isDriving: boolean;
   mapLoading: boolean;
+  modalOpen: boolean;
 }
 
 interface IProps extends RouteComponentProps<any> {
   google: any;
   reportLocation: MutationFn;
+  updateRideFn: MutationFn;
 }
 
 class ProfileQuery extends Query<userProfile> {}
@@ -52,6 +57,7 @@ class NearbyQuery extends Query<getDrivers> {}
 class RequestRideMutation extends Mutation<requestRide, requestRideVariables> {}
 class GetNearbyRides extends Query<getRides> {}
 class AcceptRide extends Mutation<acceptRide, acceptRideVariables> {}
+class RideUpdate extends Mutation<updateRide, updateRideVariables> {}
 
 class HomeContainer extends React.Component<IProps, IState> {
   public mapRef: any;
@@ -68,11 +74,12 @@ class HomeContainer extends React.Component<IProps, IState> {
     isMenuOpen: false,
     lat: 0,
     lng: 0,
-    price: undefined,
+    price: 0,
     toAddress: "",
     toLat: 0,
     toLng: 0,
-    mapLoading: true
+    mapLoading: true,
+    modalOpen: true
   };
   constructor(props) {
     super(props);
@@ -102,7 +109,8 @@ class HomeContainer extends React.Component<IProps, IState> {
       toLat,
       toLng,
       duration,
-      isDriving
+      isDriving,
+      modalOpen
     } = this.state;
     return (
       <ProfileQuery query={USER_PROFILE} onCompleted={this.handleProfileQuery}>
@@ -156,20 +164,27 @@ class HomeContainer extends React.Component<IProps, IState> {
                           onCompleted={this.handleRideAcceptance}
                         >
                           {acceptRideFn => (
-                            <HomePresenter
-                              loading={loading}
-                              isMenuOpen={isMenuOpen}
-                              toggleMenu={this.toggleMenu}
-                              mapRef={this.mapRef}
-                              toAddress={toAddress}
-                              onInputChange={this.onInputChange}
-                              price={price}
-                              data={data}
-                              onAddressSubmit={this.onAddressSubmit}
-                              requestRideFn={requestRideFn}
-                              nearbyRide={nearbyRide}
-                              acceptRideFn={acceptRideFn}
-                            />
+                            <RideUpdate mutation={UPDATE_RIDE_STATUS}>
+                              {updateRideFn => (
+                                <HomePresenter
+                                  loading={loading}
+                                  isMenuOpen={isMenuOpen}
+                                  toggleMenu={this.toggleMenu}
+                                  mapRef={this.mapRef}
+                                  toAddress={toAddress}
+                                  onInputChange={this.onInputChange}
+                                  price={price}
+                                  data={data}
+                                  onAddressSubmit={this.onAddressSubmit}
+                                  requestRideFn={requestRideFn}
+                                  nearbyRide={nearbyRide}
+                                  acceptRideFn={acceptRideFn}
+                                  modalOpen={modalOpen}
+                                  toggleModal={this.toggleModal}
+                                  updateRideFn={updateRideFn}
+                                />
+                              )}
+                            </RideUpdate>
                           )}
                         </AcceptRide>
                       );
@@ -284,7 +299,6 @@ class HomeContainer extends React.Component<IProps, IState> {
     const { google } = this.props;
     const maps = google.maps;
     const result = await geoCode(toAddress);
-    console.log(result);
     if (result !== false) {
       const { lat, lng, formatted_address: formatedAddress } = result;
       if (this.toMarker) {
@@ -360,8 +374,9 @@ class HomeContainer extends React.Component<IProps, IState> {
   public setPrice = () => {
     const { distance } = this.state;
     if (distance) {
+      const price = parseFloat(distance.replace(",", "")) * 3;
       this.setState({
-        price: Number(parseFloat(distance.replace(",", "")) * 3).toFixed(2)
+        price: Number(price.toFixed(2))
       });
     }
   };
@@ -434,9 +449,17 @@ class HomeContainer extends React.Component<IProps, IState> {
   public handleRideAcceptance = (data: acceptRide) => {
     const { history } = this.props;
     const { UpdateRideStatus } = data;
+    console.log(UpdateRideStatus);
     if (UpdateRideStatus.ok) {
       history.push(`/ride/${UpdateRideStatus.rideId}`);
     }
+  };
+
+  public toggleModal = () => {
+    const { modalOpen } = this.state;
+    this.setState({
+      modalOpen: !modalOpen
+    } as any);
   };
 }
 
