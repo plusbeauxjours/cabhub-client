@@ -164,7 +164,38 @@ class HomeContainer extends React.Component<IProps, IState> {
                           onCompleted={this.handleRideAcceptance}
                         >
                           {acceptRideFn => (
-                            <RideUpdate mutation={UPDATE_RIDE_STATUS}>
+                            <RideUpdate
+                              mutation={UPDATE_RIDE_STATUS}
+                              update={(cache, { data: rideUpdateData }) => {
+                                if (rideUpdateData) {
+                                  const { UpdateRideStatus } = rideUpdateData;
+                                  if (!UpdateRideStatus.ok) {
+                                    toast.error(UpdateRideStatus.error);
+                                    return;
+                                  }
+                                  const query: userProfile | null = cache.readQuery(
+                                    {
+                                      query: USER_PROFILE
+                                    }
+                                  );
+                                  if (query) {
+                                    const {
+                                      GetMyProfile: { user }
+                                    } = query;
+                                    if (user) {
+                                      user.isRiding = !user.isRiding;
+                                    }
+                                  }
+                                  cache.writeQuery({
+                                    query: USER_PROFILE,
+                                    data: query
+                                  });
+                                }
+                              }}
+                              onCompleted={() =>
+                                toast.success("Request Canceled")
+                              }
+                            >
                               {updateRideFn => (
                                 <HomePresenter
                                   loading={loading}

@@ -157,7 +157,7 @@ const HomePresenter: React.SFC<IProps> = ({
           <ExtendedButton
             onClick={onAddressSubmit}
             disabled={toAddress === ""}
-            value={price === 0 ? "Change address" : "Pick Address"}
+            value={price !== 0 ? "Change address" : "Pick Address"}
           />
         </React.Fragment>
       )}
