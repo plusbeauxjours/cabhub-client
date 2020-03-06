@@ -16,7 +16,7 @@ const Image = styled.label`
   cursor: pointer;
   height: 150px;
   width: 150px;
-  border: 1px solid black;
+  border: 1px solid grey;
   margin-left: 40px;
   display: block;
   border-radius: 50%;

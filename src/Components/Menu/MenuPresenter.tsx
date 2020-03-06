@@ -30,7 +30,8 @@ const Image = styled.img`
   width: 150px;
   margin-bottom: 30px;
   margin-top: 100px;
-  background-color: grey;
+  background-color: transparent;
+  border: 1px solid grey;
   border-radius: 75px;
   overflow: hidden;
 `;

@@ -9,11 +9,13 @@ import Input from "../../Components/Input";
 import styled from "../../typed-components";
 
 const Container = styled.div`
-  padding: 0 40px;
+  margin-top: 200px;
+  padding: 0 80px;
 `;
 
 const ExtendedInput = styled(Input)`
   margin-bottom: 40px;
+  text-align: center;
 `;
 
 const ExtendedLink = styled(Link)`
@@ -25,7 +27,8 @@ const ExtendedLink = styled(Link)`
 const Slim = styled.span`
   font-size: 10px;
   text-decoration: underline;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  text-align: center;
 `;
 
 interface IProps {

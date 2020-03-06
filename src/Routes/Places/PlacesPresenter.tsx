@@ -10,6 +10,9 @@ const Container = styled.div`
   padding: 0 40px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200px;
 `;
 
 const SLink = styled(Link)`
@@ -20,7 +23,7 @@ const SLink = styled(Link)`
 const Slim = styled.span`
   font-size: 10px;
   text-decoration: underline;
-  margin-bottom: 20px;
+  margin-top: 20px;
 `;
 interface IProps {
   data?: getPlaces;
@@ -47,6 +50,7 @@ const PlacesPresenter: React.SFC<IProps> = ({
             fav={place!.isFav}
             name={place!.name}
             address={place!.address}
+            deletable={true}
           />
         ))}
       <Slim>

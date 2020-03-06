@@ -34,12 +34,12 @@ class RideContainer extends React.Component<IProps> {
     } = this.props;
     return (
       <ProfileQuery query={USER_PROFILE}>
-        {({ data: userData }) => (
+        {({ data: userData, loading: userLoading }) => (
           <RideQuery
             query={GET_RIDE}
             variables={{ rideId: parseFloat(rideId) }}
           >
-            {({ data, loading, subscribeToMore }) => {
+            {({ data: rideData, loading: rideLoading, subscribeToMore }) => {
               const subscribeOptions: SubscribeToMoreOptions = {
                 document: RIDE_SUBSCRIPTION,
                 updateQuery: (prev, { subscriptionData }) => {
@@ -62,8 +62,9 @@ class RideContainer extends React.Component<IProps> {
                   {updateRideFn => (
                     <RidePresenter
                       userData={userData}
-                      loading={loading}
-                      data={data}
+                      userLoading={userLoading}
+                      rideData={rideData}
+                      rideLoading={rideLoading}
                       updateRideFn={updateRideFn}
                     />
                   )}

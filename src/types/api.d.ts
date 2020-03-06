@@ -45,6 +45,28 @@ export interface editPlaceVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: deletePlace
+// ====================================================
+
+export interface deletePlace_DeletePlace {
+  __typename: "DeletePlaceResponse";
+  ok: boolean;
+  error: string | null;
+}
+
+export interface deletePlace {
+  DeletePlace: deletePlace_DeletePlace;
+}
+
+export interface deletePlaceVariables {
+  placeId: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: addPlace
 // ====================================================
 

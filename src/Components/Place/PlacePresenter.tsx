@@ -17,9 +17,18 @@ const Container = styled.div`
 
 const Name = styled.span`
   display: block;
+  text-align: center;
 `;
 
 const Icon = styled.span`
+  cursor: pointer;
+  margin-right: 5px;
+`;
+
+const Slim = styled.span`
+  font-size: 10px;
+  text-decoration: underline;
+  margin-left: 20px;
   cursor: pointer;
 `;
 
@@ -32,20 +41,27 @@ interface IProps {
   fav: boolean;
   name: string;
   address: string;
-  onStarPress: MutationFn;
+  editPlaceFn: MutationFn;
+  deletePlaceFn: MutationFn;
+  deletable?: boolean;
 }
 
 const PlacePresenter: React.SFC<IProps> = ({
-  onStarPress,
+  editPlaceFn,
+  deletePlaceFn,
   fav,
   name,
-  address
+  address,
+  deletable
 }) => (
   <Place>
-    <Icon onClick={onStarPress as any}>{fav ? "★" : "✩"}</Icon>
     <Container>
-      <Name>{name}</Name>
+      <Name>
+        <Icon onClick={editPlaceFn as any}>{fav ? "★" : "✩"}</Icon>
+        {name}
+      </Name>
       <Address>{address}</Address>
+      {deletable && <Slim onClick={deletePlaceFn as any}>Delete Place</Slim>}
     </Container>
   </Place>
 );

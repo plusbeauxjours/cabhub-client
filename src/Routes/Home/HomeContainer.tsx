@@ -193,7 +193,7 @@ class HomeContainer extends React.Component<IProps, IState> {
                                 }
                               }}
                               onCompleted={() =>
-                                toast.success("Request Canceled")
+                                toast.success("Request Updated")
                               }
                             >
                               {updateRideFn => (

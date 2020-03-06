@@ -52,7 +52,7 @@ const Bold = styled.span`
 const Slim = styled.span`
   font-size: 10px;
   text-decoration: underline;
-  margin-bottom: 20px;
+  margin-top: 20px;
 `;
 
 const Key = styled.span`
@@ -111,6 +111,7 @@ const SettingsPresenter: React.SFC<IProps> = ({
                 fav={place!.isFav}
                 name={place!.name}
                 address={place!.address}
+                deletable={false}
               />
             ))}
           <Slim>

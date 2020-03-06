@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Button from "../../Components/Button";
 import styled from "../../typed-components";
 import { getRide, userProfile } from "../../types/api";
+import Loader from "../../Components/Loader";
 
 const Container = styled.div`
   padding: 40px;
@@ -23,10 +24,12 @@ const Data = styled.span`
 `;
 
 const Img = styled.img`
+  height: 50px;
+  width: 50px;
+  background-color: transparent;
   border-radius: 50%;
   margin-right: 20px;
-  max-width: 50px;
-  height: 50px;
+  overflow: hidden;
 `;
 
 const Passenger = styled.div`
@@ -44,18 +47,23 @@ const ExtendedButton = styled(Button)`
 `;
 
 interface IProps {
-  data?: getRide;
   userData?: userProfile;
-  loading: boolean;
+  userLoading: boolean;
+  rideData?: getRide;
+  rideLoading: boolean;
   updateRideFn: MutationFn;
 }
 
 const RidePresenter: React.SFC<IProps> = ({
-  data: { GetRide: { ride = null } = {} } = {},
+  rideData: { GetRide: { ride = null } = {} } = {},
   userData: { GetMyProfile: { user = null } = {} } = {},
+  userLoading,
+  rideLoading,
   updateRideFn
 }) => {
-  if (ride && user) {
+  if (userLoading || rideLoading) {
+    return <Loader />;
+  } else if (ride && user) {
     return (
       <Container>
         {console.log(ride, user)}
@@ -70,8 +78,8 @@ const RidePresenter: React.SFC<IProps> = ({
               <React.Fragment>
                 <Title>Driver</Title>
                 <Passenger>
-                  <Img src={ride.driver.profilePhoto!} />
-                  <Data>{ride.driver.fullName!}</Data>
+                  {ride.driver && <Img src={ride.driver.profilePhoto!} />}
+                  {ride.driver && <Data>{ride.driver.fullName!}</Data>}
                 </Passenger>
               </React.Fragment>
             )}
