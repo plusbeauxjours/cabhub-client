@@ -39,6 +39,7 @@ const PlacesPresenter: React.SFC<IProps> = ({
       <title>Places | Puber</title>
     </Helmet>
     <Header title={"Places"} backTo={"/"} />
+    {console.log(places)}
     <Container>
       {!loading && places && places.length === 0 && "You have no places"}
       {!loading &&

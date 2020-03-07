@@ -43,7 +43,10 @@ class ChatContainer extends React.Component<IProps, IState> {
     return (
       <ProfileQuery query={USER_PROFILE}>
         {({ data: userData }) => (
-          <ChatQuery query={GET_CHAT} variables={{ chatId }}>
+          <ChatQuery
+            query={GET_CHAT}
+            variables={{ chatId: parseFloat(chatId) }}
+          >
             {({ data, loading, subscribeToMore }) => {
               const subscribeToMoreOptions: SubscribeToMoreOptions = {
                 document: SUBSCRIBE_TO_MESSAGES,

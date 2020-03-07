@@ -66,36 +66,31 @@ class HomeContainer extends React.Component<IProps, IState> {
   public toMarker: google.maps.Marker;
   public directions: google.maps.DirectionsRenderer;
   public drivers: google.maps.Marker[];
-  public state = {
-    distance: "",
-    duration: undefined,
-    fromAddress: "",
-    isDriving: true,
-    isMenuOpen: false,
-    lat: 0,
-    lng: 0,
-    price: 0,
-    toAddress: "",
-    toLat: 0,
-    toLng: 0,
-    mapLoading: true,
-    modalOpen: true
-  };
   constructor(props) {
     super(props);
+    const { location: { state = {} } = {} } = ({} = props);
+    this.state = {
+      distance: "",
+      duration: undefined,
+      fromAddress: "",
+      isDriving: true,
+      isMenuOpen: false,
+      lat: 0,
+      lng: 0,
+      price: 0,
+      toAddress: "",
+      toLat: 0,
+      toLng: 0,
+      mapLoading: true,
+      modalOpen: true
+    };
+    console.log("home state", state);
     this.mapRef = React.createRef();
     this.drivers = [];
     navigator.geolocation.getCurrentPosition(
       this.handleGeoSuccess,
       this.handleGeoError
     );
-    if (
-      this.state.toAddress !== "" &&
-      this.state.toLat === 0 &&
-      this.state.toLng === 0
-    ) {
-      this.onAddressSubmit();
-    }
   }
   public componentDidMount() {
     navigator.geolocation.getCurrentPosition(
@@ -487,7 +482,6 @@ class HomeContainer extends React.Component<IProps, IState> {
   public handleRideAcceptance = (data: acceptRide) => {
     const { history } = this.props;
     const { UpdateRideStatus } = data;
-    console.log(UpdateRideStatus);
     if (UpdateRideStatus.ok) {
       history.push(`/ride/${UpdateRideStatus.rideId}`);
     }

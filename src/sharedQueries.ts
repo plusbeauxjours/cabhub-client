@@ -28,6 +28,8 @@ export const GET_PLACES = gql`
         id
         name
         address
+        lat
+        lng
         isFav
       }
     }

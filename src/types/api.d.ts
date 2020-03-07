@@ -438,7 +438,9 @@ export interface getRide_GetRide_ride {
   distance: string;
   duration: string;
   driver: getRide_GetRide_ride_driver | null;
+  driverId: number | null;
   passenger: getRide_GetRide_ride_passenger | null;
+  passengerId: number | null;
   chatId: number | null;
 }
 
@@ -489,7 +491,9 @@ export interface rideUpdates_RideStatusSubscription {
   distance: string;
   duration: string;
   driver: rideUpdates_RideStatusSubscription_driver | null;
+  driverId: number | null;
   passenger: rideUpdates_RideStatusSubscription_passenger | null;
+  passengerId: number | null;
   chatId: number | null;
 }
 
@@ -615,6 +619,8 @@ export interface getPlaces_GetMyPlaces_places {
   id: number;
   name: string;
   address: string;
+  lat: number;
+  lng: number;
   isFav: boolean;
 }
 

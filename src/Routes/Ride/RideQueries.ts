@@ -18,11 +18,13 @@ export const GET_RIDE = gql`
           fullName
           profilePhoto
         }
+        driverId
         passenger {
           id
           fullName
           profilePhoto
         }
+        passengerId
         chatId
       }
     }
@@ -44,11 +46,13 @@ export const RIDE_SUBSCRIPTION = gql`
         fullName
         profilePhoto
       }
+      driverId
       passenger {
         id
         fullName
         profilePhoto
       }
+      passengerId
       chatId
     }
   }

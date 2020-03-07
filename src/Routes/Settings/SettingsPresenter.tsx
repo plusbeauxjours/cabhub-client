@@ -24,20 +24,15 @@ const Box = styled.div`
   margin-bottom: 30px;
 `;
 
-const Image = styled.label`
-  cursor: pointer;
+const Image = styled.img`
   height: 150px;
   width: 150px;
-  border: 1px solid black;
-  display: block;
-  border-radius: 50%;
-  margin-bottom: 35px;
-  font-size: 28px;
+  margin-bottom: 30px;
+  margin-top: 100px;
+  background-color: transparent;
+  border: 1px solid grey;
+  border-radius: 75px;
   overflow: hidden;
-  & img {
-    width: 150px;
-    height: 150px;
-  }
 `;
 
 const Keys = styled.div`
