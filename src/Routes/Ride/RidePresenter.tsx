@@ -5,15 +5,22 @@ import styled from "../../typed-components";
 import { getRide, userProfile } from "../../types/api";
 import Loader from "../../Components/Loader";
 import { Link } from "react-router-dom";
+import Header from "../../Components/Header/Header";
+import Helmet from "react-helmet";
 
 const Container = styled.div`
+  flex-direction: column;
   padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-const Title = styled.h4`
-  font-weight: 800;
+const Title = styled.p`
+  font-weight: 600;
+  font-size: 15px
   margin-top: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   &:first-child {
     margin-top: 0;
   }
@@ -40,6 +47,7 @@ const Passenger = styled.div`
 
 const Buttons = styled.div`
   margin: 30px 0px;
+  width: 500px;
 `;
 
 const renderStatusButton = ({ ride, user, updateRideFn }) => {
@@ -94,46 +102,53 @@ const RidePresenter: React.SFC<IProps> = ({
     return <Loader />;
   } else if (ride && user) {
     return (
-      <Container>
-        {ride && user && (
-          <React.Fragment>
-            <Title>Passenger</Title>
-            <Passenger>
-              {ride.passenger && <Img src={ride.passenger.profilePhoto!} />}
-              {ride.passenger && <Data>{ride.passenger.fullName!}</Data>}
-            </Passenger>
-            {ride.driver && (
-              <React.Fragment>
-                <Title>Driver</Title>
-                <Passenger>
-                  {ride.driver && <Img src={ride.driver.profilePhoto!} />}
-                  {ride.driver && <Data>{ride.driver.fullName!}</Data>}
-                </Passenger>
-              </React.Fragment>
-            )}
-            <Title>From</Title>
-            <Data>{ride.pickUpAddress}</Data>
-            <Title>To</Title>
-            <Data>{ride.dropOffAddress}</Data>
-            <Title>Price</Title>
-            <Data>{ride.price}</Data>
-            <Title>Distance</Title>
-            <Data>{ride.distance}</Data>
-            <Title>Duration</Title>
-            <Data>{ride.duration}</Data>
-            <Title>Status</Title>
-            <Data>{ride.status}</Data>
-            <Buttons>
-              {renderStatusButton({ user, ride, updateRideFn })}
-              {ride.status !== "REQUESTING" && (
-                <Link to={`/chat/${ride.chatId}`}>
-                  <ExtendedButton value={"Chat"} onClick={null} />
-                </Link>
+      <React.Fragment>
+        <Helmet>
+          <title>Add Place | Puber</title>
+        </Helmet>
+        <Header title={"Ride"} backTo={"/"} />
+        <Container>
+          {ride && user && (
+            <React.Fragment>
+              <Title>Passenger</Title>
+              <Passenger>
+                {ride.passenger && <Img src={ride.passenger.profilePhoto!} />}
+                {ride.passenger && <Data>{ride.passenger.fullName!}</Data>}
+              </Passenger>
+              {ride.driver && (
+                <React.Fragment>
+                  <Title>Driver</Title>
+                  <Passenger>
+                    {ride.driver && <Img src={ride.driver.profilePhoto!} />}
+                    {ride.driver && <Data>{ride.driver.fullName!}</Data>}
+                  </Passenger>
+                </React.Fragment>
               )}
-            </Buttons>
-          </React.Fragment>
-        )}
-      </Container>
+              <Title>From</Title>
+              <Data>{ride.pickUpAddress}</Data>
+              <Title>To</Title>
+              <Data>{ride.dropOffAddress}</Data>
+              <Title>Price</Title>
+              <Data>{ride.price}</Data>
+              <Title>Distance</Title>
+              <Data>{ride.distance}</Data>
+              <Title>Duration</Title>
+              <Data>{ride.duration}</Data>
+              <Title>Status</Title>
+              <Data>{ride.status}</Data>
+
+              <Buttons>
+                {renderStatusButton({ user, ride, updateRideFn })}
+                {ride.status !== "REQUESTING" && (
+                  <Link to={`/chat/${ride.chatId}`}>
+                    <ExtendedButton value={"Chat"} onClick={null} />
+                  </Link>
+                )}
+              </Buttons>
+            </React.Fragment>
+          )}
+        </Container>
+      </React.Fragment>
     );
   } else {
     return null;

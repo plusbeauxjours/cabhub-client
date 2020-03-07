@@ -35,3 +35,35 @@ export const GET_PLACES = gql`
     }
   }
 `;
+
+export const GET_MY_RIDES = gql`
+  query getMyRides {
+    GetMyRides {
+      ok
+      error
+      rides {
+        id
+        status
+        pickUpAddress
+        dropOffAddress
+        price
+        distance
+        duration
+        driver {
+          id
+          fullName
+          profilePhoto
+        }
+        driverId
+        passenger {
+          id
+          fullName
+          profilePhoto
+        }
+        passengerId
+        chatId
+        createdAt
+      }
+    }
+  }
+`;

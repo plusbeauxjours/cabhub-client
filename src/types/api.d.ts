@@ -620,6 +620,56 @@ export interface getPlaces {
   GetMyPlaces: getPlaces_GetMyPlaces;
 }
 
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: getMyRides
+// ====================================================
+
+export interface getMyRides_GetMyRides_rides_driver {
+  __typename: "User";
+  id: number;
+  fullName: string | null;
+  profilePhoto: string | null;
+}
+
+export interface getMyRides_GetMyRides_rides_passenger {
+  __typename: "User";
+  id: number;
+  fullName: string | null;
+  profilePhoto: string | null;
+}
+
+export interface getMyRides_GetMyRides_rides {
+  __typename: "Ride";
+  id: number;
+  status: string;
+  pickUpAddress: string;
+  dropOffAddress: string;
+  price: number;
+  distance: string;
+  duration: string;
+  driver: getMyRides_GetMyRides_rides_driver | null;
+  driverId: number | null;
+  passenger: getMyRides_GetMyRides_rides_passenger | null;
+  passengerId: number | null;
+  chatId: number | null;
+  createdAt: string;
+}
+
+export interface getMyRides_GetMyRides {
+  __typename: "GetMyRidesResponse";
+  ok: boolean;
+  error: string | null;
+  rides: (getMyRides_GetMyRides_rides | null)[] | null;
+}
+
+export interface getMyRides {
+  GetMyRides: getMyRides_GetMyRides;
+}
+
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 

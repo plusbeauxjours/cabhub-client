@@ -63,12 +63,12 @@ class ChatContainer extends React.Component<IProps, IState> {
                     }
                   } = prev;
                   const newMessageId = MessageSubscription.id;
-                  const latestMessageId = messages[messages.length - 1].id;
-
-                  if (newMessageId === latestMessageId) {
-                    return;
+                  const latestMessageId =
+                    messages.length > 0 ? messages[messages.length - 1].id : -1;
+                  if (latestMessageId === newMessageId) {
+                    return prev;
                   }
-                  const newObject = Object.assign({}, prev, {
+                  const updatedData = Object.assign({}, prev, {
                     GetChat: {
                       ...prev.GetChat,
                       chat: {
@@ -80,7 +80,7 @@ class ChatContainer extends React.Component<IProps, IState> {
                       }
                     }
                   });
-                  return newObject;
+                  return updatedData;
                 }
               };
               subscribeToMore(subscribeToMoreOptions);
