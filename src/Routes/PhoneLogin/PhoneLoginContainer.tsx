@@ -25,7 +25,7 @@ class PhoneLoginContainer extends React.Component<
 > {
   public phoneMutation: MutationFn;
   public state = {
-    countryCode: "+66",
+    countryCode: "+62",
     phoneNumber: ""
   };
 
@@ -86,7 +86,9 @@ class PhoneLoginContainer extends React.Component<
   public onSubmit: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
     const { countryCode, phoneNumber } = this.state;
-    const phone = `${countryCode}${phoneNumber}`;
+    const phone = `${countryCode}${
+      phoneNumber.startsWith("0") ? phoneNumber.substring(1) : phoneNumber
+    }`;
     const isValid = /^\+[1-9]{1}[0-9]{7,11}$/.test(phone);
     if (isValid) {
       this.phoneMutation();

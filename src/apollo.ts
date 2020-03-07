@@ -6,7 +6,6 @@ import { HttpLink } from "apollo-link-http";
 import { withClientState } from "apollo-link-state";
 import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
-import { toast } from "react-toastify";
 
 const getToken = () => {
   const token = localStorage.getItem("jwt");
@@ -29,7 +28,7 @@ const authMiddleware = new ApolloLink((operation: Operation, forward: any) => {
 });
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:4000/graphql"
+  uri: "https://puber-server.herokuapp.com/graphql"
 });
 
 const wsLink = new WebSocketLink({
@@ -39,7 +38,7 @@ const wsLink = new WebSocketLink({
     },
     reconnect: true
   },
-  uri: "ws://localhost:4000/subscription"
+  uri: "ws://puber-server.herokuapp.com/subscription"
 });
 
 const combinedLinks = split(
@@ -54,11 +53,11 @@ const combinedLinks = split(
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.map(({ message }) => {
-      toast.error(`Unexpected error: ${message}`);
+      console.log(`Unexpected error: ${message}`);
     });
   }
   if (networkError) {
-    toast.error(`Network error: ${networkError}`);
+    console.log(`Network error: ${networkError}`);
   }
 });
 
