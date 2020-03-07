@@ -48,6 +48,7 @@ class ChatContainer extends React.Component<IProps, IState> {
             variables={{ chatId: parseFloat(chatId) }}
           >
             {({ data, loading, subscribeToMore }) => {
+              console.log(subscribeToMore);
               const subscribeToMoreOptions: SubscribeToMoreOptions = {
                 document: SUBSCRIBE_TO_MESSAGES,
                 updateQuery: (prev, { subscriptionData }) => {

@@ -110,7 +110,7 @@ export interface getChat_GetChat_chat_messages {
 
 export interface getChat_GetChat_chat {
   __typename: "Chat";
-  passengerId: number;
+  passengerId: number | null;
   driverId: number | null;
   messages: (getChat_GetChat_chat_messages | null)[] | null;
 }
