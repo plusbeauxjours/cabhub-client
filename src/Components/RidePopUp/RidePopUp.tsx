@@ -80,7 +80,7 @@ const RidePopUp: React.SFC<IProps> = ({
     </Passenger>
     <Button
       onClick={() => {
-        acceptRideFn({ variables: { rideId: id } }), console.log("id", id);
+        acceptRideFn({ variables: { rideId: id } });
       }}
       value={"Accept Ride"}
     />

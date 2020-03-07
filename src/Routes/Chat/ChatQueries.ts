@@ -11,9 +11,7 @@ export const GET_CHAT = gql`
         messages {
           id
           text
-          user {
-            id
-          }
+          userId
         }
       }
     }
@@ -28,9 +26,7 @@ export const SEND_MESSAGE = gql`
       message {
         id
         text
-        user {
-          id
-        }
+        userId
       }
     }
   }
@@ -41,9 +37,7 @@ export const SUBSCRIBE_TO_MESSAGES = gql`
     MessageSubscription {
       id
       text
-      user {
-        id
-      }
+      userId
     }
   }
 `;

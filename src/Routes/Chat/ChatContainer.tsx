@@ -47,8 +47,7 @@ class ChatContainer extends React.Component<IProps, IState> {
             query={GET_CHAT}
             variables={{ chatId: parseFloat(chatId) }}
           >
-            {({ data, loading, subscribeToMore }) => {
-              console.log(subscribeToMore);
+            {({ data: chatData, loading, subscribeToMore }) => {
               const subscribeToMoreOptions: SubscribeToMoreOptions = {
                 document: SUBSCRIBE_TO_MESSAGES,
                 updateQuery: (prev, { subscriptionData }) => {
@@ -91,7 +90,7 @@ class ChatContainer extends React.Component<IProps, IState> {
                     this.sendMessageFn = sendMessageFn;
                     return (
                       <ChatPresenter
-                        data={data}
+                        chatData={chatData}
                         loading={loading}
                         userData={userData}
                         messageText={message}
@@ -129,7 +128,7 @@ class ChatContainer extends React.Component<IProps, IState> {
       });
       this.sendMessageFn({
         variables: {
-          chatId,
+          chatId: parseFloat(chatId),
           text: message
         }
       });

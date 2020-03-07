@@ -19,11 +19,12 @@ class VerifyMuataion extends Mutation<verifyPhone, verifyPhoneVariables> {}
 class VerifyPhoneContainer extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
+    const { location: { state = {} as any } = {} } = ({} = props);
     if (!props.location.state) {
       props.history.push("/");
     }
     this.state = {
-      phoneNumber: props.location.state.phone,
+      phoneNumber: state.phone,
       verificationKey: ""
     };
   }
@@ -40,7 +41,6 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
             }}
             onCompleted={data => {
               const { CompletePhoneVerification } = data;
-              console.log(CompletePhoneVerification);
               if (CompletePhoneVerification.ok) {
                 if (CompletePhoneVerification.token) {
                   logUserIn({

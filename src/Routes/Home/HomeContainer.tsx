@@ -68,7 +68,6 @@ class HomeContainer extends React.Component<IProps, IState> {
   public drivers: google.maps.Marker[];
   constructor(props) {
     super(props);
-    const { location: { state = {} } = {} } = ({} = props);
     this.state = {
       distance: "",
       duration: undefined,
@@ -84,7 +83,6 @@ class HomeContainer extends React.Component<IProps, IState> {
       mapLoading: true,
       modalOpen: true
     };
-    console.log("home state", state);
     this.mapRef = React.createRef();
     this.drivers = [];
     navigator.geolocation.getCurrentPosition(

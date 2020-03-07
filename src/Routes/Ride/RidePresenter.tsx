@@ -43,7 +43,6 @@ const Buttons = styled.div`
 `;
 
 const renderStatusButton = ({ ride, user, updateRideFn }) => {
-  console.log(ride);
   if (ride.driver && user && ride.driver.id === user.id) {
     if (ride.status === "ACCEPTED") {
       return (

@@ -21,7 +21,7 @@ class AddPlaceQuery extends Mutation<addPlace, addPlaceVariables> {}
 class AddPlaceContainer extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    const { location: { state = {} } = {} } = props;
+    const { location: { state = {} as any } = {} } = ({} = props);
     this.state = {
       address: state.address || "",
       lat: state.lat || 0,

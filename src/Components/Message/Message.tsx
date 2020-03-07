@@ -3,7 +3,7 @@ import styled from "../../typed-components";
 
 const Container = styled("div")`
   background-color: ${props =>
-    props.mine ? props.theme.blueColor : props.them.greyColor};
+    props.mine ? props.theme.blueColor : props.theme.greyColor};
   color: white;
   padding: 10px 20px;
   border-radius: 20px;

@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const BackArrow: React.SFC<IProps> = ({ backTo, className }) => (
-  <Container className={className}>
+  <Container className={className} onClick={() => window.location.reload()}>
     <Link to={backTo}>
       <svg
         width="24"

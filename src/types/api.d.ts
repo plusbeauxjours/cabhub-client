@@ -96,16 +96,11 @@ export interface addPlaceVariables {
 // GraphQL query operation: getChat
 // ====================================================
 
-export interface getChat_GetChat_chat_messages_user {
-  __typename: "User";
-  id: number;
-}
-
 export interface getChat_GetChat_chat_messages {
   __typename: "Message";
   id: number;
   text: string;
-  user: getChat_GetChat_chat_messages_user;
+  userId: number | null;
 }
 
 export interface getChat_GetChat_chat {
@@ -138,16 +133,11 @@ export interface getChatVariables {
 // GraphQL mutation operation: sendMessage
 // ====================================================
 
-export interface sendMessage_SendChatMessage_message_user {
-  __typename: "User";
-  id: number;
-}
-
 export interface sendMessage_SendChatMessage_message {
   __typename: "Message";
   id: number;
   text: string;
-  user: sendMessage_SendChatMessage_message_user;
+  userId: number | null;
 }
 
 export interface sendMessage_SendChatMessage {
@@ -174,16 +164,11 @@ export interface sendMessageVariables {
 // GraphQL subscription operation: messageSubscription
 // ====================================================
 
-export interface messageSubscription_MessageSubscription_user {
-  __typename: "User";
-  id: number;
-}
-
 export interface messageSubscription_MessageSubscription {
   __typename: "Message";
   id: number;
   text: string;
-  user: messageSubscription_MessageSubscription_user;
+  userId: number | null;
 }
 
 export interface messageSubscription {
