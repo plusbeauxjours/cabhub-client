@@ -28,7 +28,7 @@ const authMiddleware = new ApolloLink((operation: Operation, forward: any) => {
 });
 
 const httpLink = new HttpLink({
-  uri: "https://puber-server.herokuapp.com/graphql"
+  uri: "http://localhost:4000/graphql"
 });
 
 const wsLink = new WebSocketLink({
@@ -38,7 +38,7 @@ const wsLink = new WebSocketLink({
     },
     reconnect: true
   },
-  uri: "ws://puber-server.herokuapp.com/subscription"
+  uri: "ws://localhost:4000/subscription"
 });
 
 const combinedLinks = split(
