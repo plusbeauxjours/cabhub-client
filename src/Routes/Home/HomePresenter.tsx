@@ -130,7 +130,6 @@ const HomePresenter: React.SFC<IProps> = ({
 }) => (
   <Container>
     <Helmet>
-      {console.log(user)}
       <title>Home | Puber</title>
     </Helmet>
     <Sidebar

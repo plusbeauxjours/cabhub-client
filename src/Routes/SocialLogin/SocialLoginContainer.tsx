@@ -44,7 +44,7 @@ class SocialLoginContainer extends React.Component<IProps, IState> {
                   }
                 });
               } else {
-                toast.error(FacebookConnect.error);
+                console.log(FacebookConnect.error);
               }
             }}
           >
@@ -72,7 +72,7 @@ class SocialLoginContainer extends React.Component<IProps, IState> {
         }
       });
     } else {
-      toast.error("COuld not log you in 😔");
+      console.log("Could not log you in 😔");
     }
   };
 }

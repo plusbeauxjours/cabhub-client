@@ -4,7 +4,6 @@ import { Query, Mutation } from "react-apollo";
 import { USER_PROFILE, GET_MY_RIDES } from "../../sharedQueries";
 import { toggleDriving, userProfile, getMyRides } from "../../types/api";
 import { TOGGLE_DRIVING } from "./MenuQueries";
-import { toast } from "react-toastify";
 
 class ProfileQuery extends Query<userProfile> {}
 class RidesQuery extends Query<getMyRides> {}
@@ -22,7 +21,7 @@ class MenuContainer extends React.Component {
               if (data) {
                 const { ToggleDrivingMode } = data;
                 if (!ToggleDrivingMode.ok) {
-                  toast.error(ToggleDrivingMode.error);
+                  console.log(ToggleDrivingMode.error);
                   return;
                 }
                 const query: userProfile | null = cache.readQuery({

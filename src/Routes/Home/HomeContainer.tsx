@@ -170,7 +170,7 @@ class HomeContainer extends React.Component<IProps, IState> {
                                 if (rideUpdateData) {
                                   const { UpdateRideStatus } = rideUpdateData;
                                   if (!UpdateRideStatus.ok) {
-                                    toast.error(UpdateRideStatus.error);
+                                    console.log(UpdateRideStatus.error);
                                     return;
                                   }
                                   const query: userProfile | null = cache.readQuery(
@@ -399,7 +399,7 @@ class HomeContainer extends React.Component<IProps, IState> {
         this.setPrice
       );
     } else {
-      toast.error("There is no route there, you have to swim ");
+      console.log("There is no route there, you have to swim ");
     }
   };
   public setPrice = () => {
@@ -463,7 +463,7 @@ class HomeContainer extends React.Component<IProps, IState> {
       toast.success("Drive requested, finding a driver");
       history.push(`/ride/${RequestRide.ride!.id}`);
     } else {
-      toast.error(RequestRide.error);
+      console.log(RequestRide.error);
     }
   };
   public handleProfileQuery = (data: userProfile) => {

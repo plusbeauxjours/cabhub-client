@@ -54,7 +54,7 @@ class EditAccountContainer extends React.Component<IProps, IState> {
               if (UpdateMyProfile.ok) {
                 toast.success("Profile updated!");
               } else if (UpdateMyProfile.error) {
-                toast.error(UpdateMyProfile.error);
+                console.log(UpdateMyProfile.error);
               }
             }}
             variables={{

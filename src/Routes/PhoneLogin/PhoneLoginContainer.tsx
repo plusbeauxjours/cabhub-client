@@ -53,7 +53,7 @@ class PhoneLoginContainer extends React.Component<
               });
             }, 500);
           } else {
-            toast.error(StartPhoneVerification.error);
+            console.log(StartPhoneVerification.error);
           }
         }}
       >
@@ -93,7 +93,7 @@ class PhoneLoginContainer extends React.Component<
     if (isValid) {
       this.phoneMutation();
     } else {
-      toast.error("Please write a valid phone number");
+      console.log("Please write a valid phone number");
     }
   };
 }
