@@ -71,7 +71,7 @@ const SocialLoginPresenter: React.SFC<IProps> = ({ loginCallback }) => (
       rel="noopener noreferrer"
       href={" https://developers.facebook.com/policy/"}
     >
-      <Text>Provide a publicly </Text>
+      <Text>Private policy </Text>
     </a>
   </Container>
 );
