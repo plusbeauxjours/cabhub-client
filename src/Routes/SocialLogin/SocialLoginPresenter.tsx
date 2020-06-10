@@ -29,6 +29,9 @@ const Link = styled.span`
 const Icon = styled.span`
   margin-right: 10px;
 `;
+const Text = styled.p`
+  font-size: 10px;
+`;
 
 interface IProps {
   loginCallback: (response) => void;
@@ -46,7 +49,7 @@ const SocialLoginPresenter: React.SFC<IProps> = ({ loginCallback }) => (
       autoLoad={false}
       fields="name, first_name, last_name, email"
       callback={loginCallback}
-      render={renderProps => (
+      render={(renderProps) => (
         <Link onClick={renderProps.onClick}>
           <Icon>
             <svg
@@ -63,6 +66,13 @@ const SocialLoginPresenter: React.SFC<IProps> = ({ loginCallback }) => (
         </Link>
       )}
     />
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href={" https://developers.facebook.com/policy/"}
+    >
+      <Text>Provide a publicly </Text>
+    </a>
   </Container>
 );
 
