@@ -69,7 +69,7 @@ const SocialLoginPresenter: React.SFC<IProps> = ({ loginCallback }) => (
     <a
       target="_blank"
       rel="noopener noreferrer"
-      href={" https://developers.facebook.com/policy/"}
+      href={"https://www.pinner.fun/privacypolicy/"}
     >
       <Text>Private policy </Text>
     </a>
