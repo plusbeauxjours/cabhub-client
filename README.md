@@ -1,23 +1,22 @@
 # Puber Client
 
-Client for the (N)Uber Clone Course on Nomad Academy. ReactJS, Apollo, Typescript
+<p align="center" >
+  <img src="https://www.plusbeauxjours.com/static/media/Puber_web_video.2316f83f.gif" >
+  <br>
+</p>
 
-## Screens:
+### Introduction
 
-### Logged Out:
+> Client for the (N)Uber Clone
 
-- [x] Home
-- [x] Phone Login
-- [x] Verify Phone Number
-- [x] Social Login
+### Technical Sheet
 
-### Logged In:
+> NodeJS, Express, GraphQL, TypeORM, React, Apollo, TypeScript, Styled-Components, GoogleMapAPI, Heroku
 
-- [x] Home
-- [x] Ride
-- [x] Chat
-- [x] Edit Account
-- [x] Settings
-- [x] Places
-- [x] Add Place
-- [x] Find Address
+### Portfolio Link
+
+> https://www.plusbeauxjours.com/projects/web/puber-web
+
+### Site
+
+> https://wonderful-visvesvaraya-af346f.netlify.app/
