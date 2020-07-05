@@ -1,4 +1,4 @@
-# Puber Client
+# PUBER - WEB
 
 <p align="center" >
   <img src="https://www.plusbeauxjours.com/static/media/Puber_web_video.2316f83f.gif" >
