@@ -1,7 +1,7 @@
 # PUBER - WEB
 
 <p align="center" >
-  <img src="https://www.plusbeauxjours.com/static/media/Puber_web_video.2316f83f.gif" >
+  <img src="https://github.com/plusbeauxjours/web-plusbeauxjours/blob/master/src/Images/Web/Puber_web/Puber_web_video.gif" >
   <br>
 </p>
 
@@ -15,11 +15,11 @@
 
 ### Portfolio Link
 
-> https://www.plusbeauxjours.com/projects/web/puber-web
+> https://www.plusbeauxjours.info/projects/web/puber-web
 
 ### Site
 
-> https://wonderful-visvesvaraya-af346f.netlify.app/
+> https://wonderful-visvesvaraya-af346f.netlify.app
 
 ### Server
 
