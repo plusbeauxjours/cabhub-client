@@ -23,4 +23,4 @@
 
 ### Server
 
-> https://github.com/plusbeauxjours/puber-server
+> https://github.com/plusbeauxjours/cabhub-server
