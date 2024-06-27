@@ -1,4 +1,4 @@
-# PUBER - WEB
+# CABHUB - WEB
 
 <p align="center" >
   <img src="https://github.com/plusbeauxjours/web-plusbeauxjours/blob/master/src/Images/Web/Puber_web/Puber_web_video.gif" >
@@ -7,7 +7,7 @@
 
 ### Introduction
 
-> Client for the (N)Uber Clone
+> Client for the Uber Clone
 
 ### Technical Sheet
 
@@ -15,7 +15,7 @@
 
 ### Portfolio Link
 
-> https://www.plusbeauxjours.info/projects/web/puber-web
+> https://www.plusbeauxjours.info/projects/0/web/cabhub
 
 ### Site
 
